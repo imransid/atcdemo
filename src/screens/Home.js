@@ -78,11 +78,11 @@ const App = () => {
         fakeY={fakeYY}
       />
 
-      {/* <SingleLine
+      <SingleLine
         markerValue={marker2ndItem}
         fakeX={fakeLineXX}
         fakeY={fakeLineYY}
-      /> */}
+      />
 
       <LineBox
         greenValue={green2ndPanel}
