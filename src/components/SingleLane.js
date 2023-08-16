@@ -17,67 +17,20 @@ const App = ({
   fakeX,
   fakeY,
 }) => {
-  const [modeIndex] = useState(1);
-
-  const MODE = ["noWobble", "gentle", "wobbly", "stiff"];
-
-  const myData = [
-    { x: 1.7, y: 1, size: 50, style: { stroke: "red", fill: "orange" } },
-  ];
-
-  const [pointerPosition, setPointerPosition] = useState({ x: 1, y: 1.8 }); // Initial position
+  const [pointerPosition, setPointerPosition] = useState({
+    x: 0,
+    y: 1.8,
+  }); // Initial position
 
   React.useEffect(() => {
-    const interval = setInterval(() => {
-      // Update the x-coordinate of the pointer position
-      setPointerPosition((prevPosition) => {
-        const maxX = 10; // Adjust the maximum x-coordinate as needed
-        const step = 0.1; // Adjust the step size as needed
-        const newX = prevPosition.x + step;
-        return { ...prevPosition, x: newX > maxX ? 0 : newX };
-      });
-    }, 1000); // Interval in milliseconds
-
-    return () => {
-      clearInterval(interval);
+    let data = {
+      x: markerValue[0].x,
+      y: 1.8,
     };
-  }, []);
+    setPointerPosition(data);
+  }, [markerValue, setPointerPosition]);
 
-  // React.useEffect(() => {
-  //   const handleKeyDown = (event) => {
-  //     const step = 0.1; // Adjust the step size as needed
-  //     let updatedPosition = { ...pointerPosition };
-
-  //     switch (event.key) {
-  //       case "ArrowLeft":
-  //         updatedPosition.x -= step;
-  //         break;
-  //       case "ArrowRight":
-  //         updatedPosition.x += step;
-  //         break;
-  //       case "ArrowUp":
-  //         updatedPosition.y += step;
-  //         break;
-  //       case "ArrowDown":
-  //         updatedPosition.y -= step;
-  //         break;
-  //       default:
-  //         return;
-  //     }
-
-  //     // Update the pointer position within bounds if needed
-  //     updatedPosition.x = Math.min(Math.max(updatedPosition.x, 0), 10); // Adjust the bounds
-  //     updatedPosition.y = Math.min(Math.max(updatedPosition.y, 0), 10); // Adjust the bounds
-
-  //     setPointerPosition(updatedPosition);
-  //   };
-
-  //   window.addEventListener("keydown", handleKeyDown);
-
-  //   return () => {
-  //     window.removeEventListener("keydown", handleKeyDown);
-  //   };
-  // }, [pointerPosition]);
+  console.log("pointerPosition", pointerPosition);
 
   const CustomText = ({ x, y, text, backgroundColor, borderColor }) => {
     return (

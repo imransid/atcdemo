@@ -67,18 +67,6 @@ const App = () => {
   const [marker1stItem, setMarker1stItem] = useState([{ x: 200, y: 200 }]);
   const [marker2ndItem, setMarker2ndItem] = useState([{ x: 100, y: 800 }]);
 
-  useEffect(() => {
-    // Function to update the modeIndex every 3 seconds
-    // const interval = setInterval(() => {
-    //   const randomFloat = Math.random(); // Generates a random floating-point number between 0 (inclusive) and 1 (exclusive)
-    //   const randomNumber = Math.floor(randomFloat * 800) + 100; // Generate a random integer between 1 and 9
-    //   const data = [{ x: randomNumber, y: randomNumber }];
-    //   setMarker1stItem(data);
-    // }, 1000);
-    // // Clean up the interval when the component unmounts
-    // return () => clearInterval(interval);
-  }, []);
-
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <LineBox
@@ -90,11 +78,11 @@ const App = () => {
         fakeY={fakeYY}
       />
 
-      <SingleLine
+      {/* <SingleLine
         markerValue={marker2ndItem}
         fakeX={fakeLineXX}
         fakeY={fakeLineYY}
-      />
+      /> */}
 
       <LineBox
         greenValue={green2ndPanel}

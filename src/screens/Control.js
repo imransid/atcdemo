@@ -26,7 +26,6 @@ const App = () => {
   const [moveStatusAtcUPDown, setMoveStatusAtcUpDown] = useState(false); // Initial position
 
   const sendRhythmEvent = async (upDownStatus, data) => {
-    console.log(data);
     const emitPayload = {
       senderName: "Neaz",
       targetUserName: upDownStatus ? "Rhythm" : "ATC",
@@ -51,25 +50,33 @@ const App = () => {
         let updatedPosition = {};
         if (moveStatusLeftRight) {
           updatedPosition = { ...marker2ndItem };
+          switch (event.key) {
+            case "ArrowLeft":
+              updatedPosition[0].y += step;
+              break;
+            case "ArrowRight":
+              updatedPosition[0].y -= step;
+              break;
+            default:
+              return;
+          }
         }
 
         if (moveStatusAtcUPDown) {
           updatedPosition = { ...marker1stItem };
-        }
-
-        switch (event.key) {
-          case "ArrowUp":
-            updatedPosition[0].y += step;
-            break;
-          case "ArrowDown":
-            updatedPosition[0].y -= step;
-            break;
-          default:
-            return;
+          switch (event.key) {
+            case "ArrowUp":
+              updatedPosition[0].y += step;
+              break;
+            case "ArrowDown":
+              updatedPosition[0].y -= step;
+              break;
+            default:
+              return;
+          }
         }
 
         // Update the pointer position within bounds if needed
-        //updatedPosition.x = Math.min(Math.max(updatedPosition.x, 10), 1000); // Adjust the bounds
         updatedPosition[0].y = Math.min(
           Math.max(updatedPosition[0].y, 10),
           1000
@@ -122,16 +129,20 @@ const App = () => {
     const interval = setInterval(() => {
       setMarker1stItem((prevMarker) => {
         const newX1 = prevMarker[0].x >= 1400 ? 0 : prevMarker[0].x + 50;
-        //const newY1 = prevMarker[0].y >= 1400 ? 0 : prevMarker[0].y + 50;
-        // const newY1 =
-        //   prevMarker[0].y === 1400
-        //     ? 200
-        //     : uniqueValueCheck(prevMarker[0].y, prevMarker[0].x);
+
+        let val = [{ ...prevMarker[0], x: newX1 }];
+
+        sendRhythmEvent(true, val[0]);
+
+        console.log("val", val);
 
         return [{ ...prevMarker[0], x: newX1 }];
       });
       setMarker2ndItem((prevMarker) => {
         const newX2 = prevMarker[0].x >= 1400 ? 0 : prevMarker[0].x + 50;
+        let val = [{ ...prevMarker[0], x: newX2 }];
+
+        sendRhythmEvent(false, val[0]);
         return [{ ...prevMarker[0], x: newX2 }];
       });
     }, 1000);
