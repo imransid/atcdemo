@@ -162,7 +162,10 @@ const App = () => {
       >
         {!moveStatusAtcUPDown ? (
           <button
-            onClick={() => setMoveStatusAtcUpDown(true)}
+            onClick={() => {
+              setMoveStatusLeftRight(false);
+              setMoveStatusAtcUpDown(true);
+            }}
             style={{ padding: 10 }}
           >
             Press To Control Panel
@@ -196,7 +199,10 @@ const App = () => {
       >
         {!moveStatusLeftRight ? (
           <button
-            onClick={() => setMoveStatusLeftRight(true)}
+            onClick={() => {
+              setMoveStatusAtcUpDown(false);
+              setMoveStatusLeftRight(true);
+            }}
             style={{ padding: 10, marginLeft: 20 }}
           >
             Press To Control Panel

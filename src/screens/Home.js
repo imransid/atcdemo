@@ -62,7 +62,7 @@ const App = () => {
     };
   }, []);
 
-  console.log("isConnected", isConnected, fooEvents);
+  // console.log("isConnected", isConnected, fooEvents);
 
   const [marker1stItem, setMarker1stItem] = useState([{ x: 200, y: 200 }]);
   const [marker2ndItem, setMarker2ndItem] = useState([{ x: 100, y: 800 }]);
@@ -78,11 +78,11 @@ const App = () => {
         fakeY={fakeYY}
       />
 
-      <SingleLine
+      {/* <SingleLine
         markerValue={marker2ndItem}
         fakeX={fakeLineXX}
         fakeY={fakeLineYY}
-      />
+      /> */}
 
       <LineBox
         greenValue={green2ndPanel}
