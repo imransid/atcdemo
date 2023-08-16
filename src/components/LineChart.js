@@ -33,7 +33,7 @@ const App = ({
       <XYPlot height={300} width={window.innerWidth}>
         <VerticalGridLines />
         <HorizontalGridLines />
-        <XAxis />
+        {/* <XAxis /> */}
         <LineSeries data={fakeX} color="white" />
         <LineSeries data={greenValue} color="green" />
         <LineSeries data={redValue} color="red" />
@@ -45,7 +45,7 @@ const App = ({
           style={{ height: 50, width: 50, backgroundColor: "green" }}
         />
         <LineSeries data={fakeY} color="white" />
-        <YAxis />
+        {/* <YAxis /> */}
       </XYPlot>
     </div>
   );
