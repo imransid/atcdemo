@@ -172,7 +172,7 @@ const App = () => {
           </button>
         ) : (
           <>
-            <h2>To Change Position Press Keyboard Left Or Right arrow key</h2>
+            <h2>To Change Position Press Keyboard UP Or DOWN arrow key</h2>
 
             <button
               onClick={() => setMoveStatusAtcUpDown(false)}
