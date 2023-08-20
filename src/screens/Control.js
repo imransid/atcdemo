@@ -107,23 +107,22 @@ const App = () => {
     marker2ndItem,
   ]);
 
-  const uniqueValueCheck = (data, info) => {
-    if (info === 800) {
-      return data + 20;
-    } else if (info === 850) {
-      return data + 30;
-    } else if (info < 800) {
-      return data + 50;
-    } else if (info === 900) {
-      return data - 20;
-    } else if (info === 950) {
-      return data - 30;
-    } else if (info === 1400) {
-      return 200;
-    } else {
-      return data - 50;
-    }
-  };
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    // Function to update window width when the window is resized
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -156,8 +155,9 @@ const App = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: 50,
+          height: 150,
           width: "100%",
+          flexDirection: "column",
         }}
       >
         {!moveStatusAtcUPDown ? (
@@ -171,12 +171,16 @@ const App = () => {
             Press To Control Panel
           </button>
         ) : (
-          <button
-            onClick={() => setMoveStatusAtcUpDown(false)}
-            style={{ padding: 10, marginLeft: 20 }}
-          >
-            Cancel
-          </button>
+          <>
+            <h2>To Change Position Press Keyboard Left Or Right arrow key</h2>
+
+            <button
+              onClick={() => setMoveStatusAtcUpDown(false)}
+              style={{ padding: 10, marginLeft: 20 }}
+            >
+              Cancel
+            </button>
+          </>
         )}
       </div>
       <LineBox
@@ -186,6 +190,8 @@ const App = () => {
         markerValue={marker1stItem}
         fakeX={fakeXX}
         fakeY={fakeYY}
+        windowWidth={windowWidth}
+        color={"white"}
       />
 
       <div
@@ -193,8 +199,9 @@ const App = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: 50,
+          height: 150,
           width: "100%",
+          flexDirection: "column",
         }}
       >
         {!moveStatusLeftRight ? (
@@ -208,12 +215,16 @@ const App = () => {
             Press To Control Panel
           </button>
         ) : (
-          <button
-            onClick={() => setMoveStatusLeftRight(false)}
-            style={{ padding: 10, marginLeft: 20 }}
-          >
-            Cancel
-          </button>
+          <>
+            <h2>To Change Position Press Keyboard Left Or Right arrow key</h2>
+
+            <button
+              onClick={() => setMoveStatusLeftRight(false)}
+              style={{ padding: 10, marginLeft: 20 }}
+            >
+              Cancel
+            </button>
+          </>
         )}
       </div>
 
@@ -224,6 +235,8 @@ const App = () => {
         markerValue={marker2ndItem}
         fakeX={fakeXX}
         fakeY={fakeYY}
+        windowWidth={windowWidth}
+        color={"white"}
       />
     </div>
   );
