@@ -127,7 +127,7 @@ const App = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setMarker1stItem((prevMarker) => {
-        const newX1 = prevMarker[0].x >= 1400 ? 0 : prevMarker[0].x + 50;
+        const newX1 = prevMarker[0].x >= 1000 ? 0 : prevMarker[0].x + 50;
 
         let val = [{ ...prevMarker[0], x: newX1 }];
 
@@ -138,7 +138,7 @@ const App = () => {
         return [{ ...prevMarker[0], x: newX1 }];
       });
       setMarker2ndItem((prevMarker) => {
-        const newX2 = prevMarker[0].x >= 1400 ? 0 : prevMarker[0].x + 50;
+        const newX2 = prevMarker[0].x >= 1000 ? 0 : prevMarker[0].x + 50;
         let val = [{ ...prevMarker[0], x: newX2 }];
 
         sendRhythmEvent(false, val[0]);

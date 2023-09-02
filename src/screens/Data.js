@@ -18,14 +18,6 @@ export const fakeLineXX = [
   { x: 850, y: 2 },
   { x: 900, y: 2 },
   { x: 1000, y: 2 },
-  { x: 1050, y: 2 },
-  { x: 1100, y: 2 },
-  { x: 1150, y: 2 },
-  { x: 1200, y: 2 },
-  { x: 1250, y: 2 },
-  { x: 1300, y: 2 },
-  { x: 1350, y: 2 },
-  { x: 1400, y: 2 },
 ];
 export const fakeLineYY = [
   { x: 0, y: 0 },
@@ -52,10 +44,6 @@ export const green1stPanel = [
   { x: 800, y: 1000 },
   { x: 900, y: 1050 },
   { x: 1000, y: 1000 },
-  { x: 1100, y: 900 },
-  { x: 1200, y: 800 },
-  { x: 1300, y: 700 },
-  { x: 1400, y: 600 },
 ];
 export const green2ndPanel = [
   { x: 0, y: 400 },
@@ -69,10 +57,6 @@ export const green2ndPanel = [
   { x: 800, y: 400 },
   { x: 900, y: 400 },
   { x: 1000, y: 400 },
-  { x: 1100, y: 400 },
-  { x: 1200, y: 400 },
-  { x: 1300, y: 400 },
-  { x: 1400, y: 400 },
 ];
 
 export const redLine1stPanel = [
@@ -87,10 +71,6 @@ export const redLine1stPanel = [
   { x: 800, y: 1200 },
   { x: 900, y: 1250 },
   { x: 1000, y: 1200 },
-  { x: 1100, y: 1100 },
-  { x: 1200, y: 1000 },
-  { x: 1300, y: 900 },
-  { x: 1400, y: 800 },
 ];
 
 export const redLine2ndPanel = [
@@ -105,10 +85,6 @@ export const redLine2ndPanel = [
   { x: 800, y: 500 },
   { x: 900, y: 500 },
   { x: 1000, y: 500 },
-  { x: 1100, y: 500 },
-  { x: 1200, y: 500 },
-  { x: 1300, y: 500 },
-  { x: 1400, y: 500 },
 ];
 
 export const pinkValue1stPanel = [
@@ -123,10 +99,6 @@ export const pinkValue1stPanel = [
   { x: 800, y: 800 },
   { x: 900, y: 840 },
   { x: 1000, y: 810 },
-  { x: 1100, y: 710 },
-  { x: 1200, y: 600 },
-  { x: 1300, y: 500 },
-  { x: 1400, y: 400 },
 ];
 
 export const pinkValue2ndPanel = [
@@ -141,10 +113,6 @@ export const pinkValue2ndPanel = [
   { x: 800, y: 300 },
   { x: 900, y: 300 },
   { x: 1000, y: 300 },
-  { x: 1100, y: 300 },
-  { x: 1200, y: 300 },
-  { x: 1300, y: 300 },
-  { x: 1400, y: 300 },
 ];
 
 export const fakeXX = [
