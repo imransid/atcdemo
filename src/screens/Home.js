@@ -43,8 +43,10 @@ const App = () => {
       if (value && value.flightInfo) {
         const { top, left } = value.flightInfo;
         const newData = { x: top, y: left };
+
         marker1stItem.push(newData)
         setMarker1stItem([...marker1stItem]);
+
       }
     }
 
@@ -52,8 +54,11 @@ const App = () => {
       console.log(value);
       if (value && value.flightInfo) {
         const { top, left } = value.flightInfo;
-        const newData = [{ x: top, y: left }];
-        setMarker2ndItem(newData);
+        //const newData = [{ x: top, y: left }];
+        const newData = { x: top, y: left };
+
+        marker2ndItem.push(newData)
+        setMarker2ndItem([...marker2ndItem]);
       }
     }
 
@@ -69,14 +74,26 @@ const App = () => {
     };
   }, []);
 
+  const [marker1stItem, setMarker1stItem] = useState([]);
+
+  // useEffect(()=> {
+  //   let i =0;
+  //   setInterval(()=> {
+  //     const newData = { x: i+20, y: i+50};
+  //     marker1stItem.push(newData)
+  //     setMarker1stItem([...marker1stItem]);
+  //     i=i+10
+  //   }, 1000)
+  // },[setMarker1stItem])
+
   // console.log("isConnected", isConnected, fooEvents);
 
-  const [marker1stItem, setMarker1stItem] = useState([{ x: 30, y: 4},{x:32, y: 5}]);
+  
   const [marker2ndItem, setMarker2ndItem] = useState([{ x: 100, y: 800 }]);
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
-       <LinePlot data={marker1stItem} />
+       <LinePlot data={marker1stItem}  data2={marker2ndItem}/>
       {/* <LineBox
         redValue={redLine1stPanel}
         greenValue={green1stPanel}

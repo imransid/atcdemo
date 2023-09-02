@@ -3,6 +3,7 @@ import * as d3 from "d3";
 
 export default function LinePlot({
     data,
+    data2,
     width = window.innerWidth,
     height = 400,
     marginTop = 10,
@@ -13,10 +14,18 @@ export default function LinePlot({
 
     const gx = useRef();
     const gy = useRef();
+    const gx1 = useRef();
 
-    const points = [[marginLeft+200, height-300],[marginLeft+900, height-270],[width-marginRight, height - marginBottom]];
-    const points2 = [[marginLeft, height-250],[marginLeft+900, height-220],[width-marginRight, height - marginBottom]];
-    const points3 = [[marginLeft+200, height-200],[marginLeft+900, height-170],[width-marginRight, height - marginBottom]];
+    const curve1 = [[marginLeft+200, height-300],[marginLeft+900, height-270],[width-marginRight, height - marginBottom]];
+    const curve2 = [[marginLeft, height-250],[marginLeft+900, height-220],[width-marginRight, height - marginBottom]];
+    const curve3 = [[marginLeft+200, height-200],[marginLeft+900, height-170],[width-marginRight, height - marginBottom]];
+
+
+    const curve4 = [[marginLeft+200, height-160],[marginLeft+900, height-170],[width-marginRight, marginTop]];
+    const curve5 = [[marginLeft, height-220],[marginLeft+900, height-220],[width-marginRight, marginTop]];
+    const curve6 = [[marginLeft+200, height-250],[marginLeft+900, height-270],[width-marginRight, marginTop]];
+    //const curve5 = [[marginLeft, height-250],[marginLeft+900, height-220],[width-marginRight, height - marginBottom]];
+    //const curve6 = [[marginLeft+200, height-200],[marginLeft+900, height-170],[width-marginRight, height - marginBottom]];
 
     const x = d3.scaleLinear().domain([0, 1000]).range([ marginLeft, (width - marginRight) ]);
 
@@ -24,7 +33,9 @@ export default function LinePlot({
     //console.log('Range : [',marginLeft,',',(width - marginRight),']');
   
 
-    const y = d3.scaleLinear().domain([0,d3.max(data, function(d) { return  d.y; })]).range([ (height - marginBottom), marginTop]);
+    const y = d3.scaleLinear().domain([0,d3.max(data, function(d){ return d.y})]).range([ (height - marginBottom), marginTop]);
+
+    const y1 = d3.scaleLinear().domain([0,d3.max(data2, function(d){ return d.y})]).range([ (height - marginBottom), marginTop]);
     //d3.scaleLinear(d3.extent(data), [height - marginBottom, marginTop]);
 
     const line = d3.line().curve(d3.curveNatural);
@@ -32,69 +43,85 @@ export default function LinePlot({
     const baseGraph =  d3.line()
                         .x(function(d){return x(d.x)})
                         .y(function(d){return y(d.y)})
+
+    const baseGraph2 =  d3.line()
+                        .x(function(d){return x(d.x)})
+                        .y(function(d){return y1(d.y)})
                         
-    //const line2 = d3.line().x((d) => x(d)).y((d) => y(d));
 
-    // const lineBuilder = d3
-    //                     .line()
-    //                     .x((d) => x(d))
-    //                     .y((d) => y(d));
-
-    // const linePath = lineBuilder(data);
 
     useEffect(() => void 
       d3.select(gx.current).call(d3.axisBottom(x).tickSize(0)),[gx, x]
     );
-    useEffect(() => void 
-      d3.select(gy.current).call(d3.axisLeft(y).tickSize(0)), [gy, y]
-    );
+
+    // useEffect(() => void 
+    //   d3.select(gx1.current).call(d3.axisBottom(x).tickSize(0)),[gx1, x]
+    // );
+
+    // useEffect(() => void 
+    //   d3.select(gy.current).call(d3.axisLeft(y).tickSize(0)), [gy, y]
+    // );
 
 
     return (
-      <svg width={width} height={height} id='my-svg'>
-            <g ref={gx} transform={`translate(0,${height - marginBottom})`}/>
+      <div style={{ background: 'black'}}>
+        <svg width={width} height={height} id='my-svg'>
+            <g ref={gx} color='grey'  transform={`translate(0,${height - marginBottom})`}/>
             <g  transform={`translate(${marginLeft},0)`} />
             <g fill="white" stroke="currentColor" strokeWidth="1.5">
+
               <line color='grey'  x1={marginLeft} y1={marginTop} x2={marginLeft} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x('2014-04-29')} y1={marginTop} x2={x('2014-04-29')} y2={height - marginBottom}/>
-              {/* <line color='grey' opacity='0.4' x1={x(10)} y1={marginTop} x2={x(10)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(15)} y1={marginTop} x2={x(15)} y2={height - marginBottom}/>
-              <line color='grey'  x1={x(20)} y1={marginTop} x2={x(20)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(40)} y1={marginTop} x2={x(40)} y2={height - marginBottom}/>
-              <line  color='grey' opacity='0.4'x1={x(60)} y1={marginTop} x2={x(60)} y2={height - marginBottom}/>
-              <line  color='grey' opacity='0.4'x1={x(80)} y1={marginTop} x2={x(80)} y2={height - marginBottom}/>
-              <line  color='grey' opacity='0.4'x1={x(100)} y1={marginTop} x2={x(100)} y2={height - marginBottom}/>
-              <line  color='grey' opacity='0.4'x1={x(120)} y1={marginTop} x2={x(120)} y2={height - marginBottom}/>
-              <line  color='grey' opacity='0.4'x1={x(140)} y1={marginTop} x2={x(140)} y2={height - marginBottom}/>
-              <line  color='grey' opacity='0.4'x1={x(160)} y1={marginTop} x2={x(160)} y2={height - marginBottom}/>
-              <line  color='grey' opacity='0.4'x1={x(180)} y1={marginTop} x2={x(180)} y2={height - marginBottom}/>
-              <line  color='grey' opacity='0.4'x1={x(200)} y1={marginTop} x2={x(200)} y2={height - marginBottom}/> */}
+              <line color='grey' opacity='0.4' x1={x(25)} y1={marginTop} x2={x(25)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(50)} y1={marginTop} x2={x(50)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(75)} y1={marginTop} x2={x(75)} y2={height - marginBottom}/>
+              <line color='grey' x1={x(100)} y1={marginTop} x2={x(100)} y2={height - marginBottom}/>
+
+              <line color='grey' opacity='0.4' x1={x(125)} y1={marginTop} x2={x(125)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(150)} y1={marginTop} x2={x(150)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(175)} y1={marginTop} x2={x(175)} y2={height - marginBottom}/>
+              <line color='grey'  x1={x(200)} y1={marginTop} x2={x(200)} y2={height - marginBottom}/>
+
+              <line color='grey' opacity='0.4' x1={x(225)} y1={marginTop} x2={x(225)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(250)} y1={marginTop} x2={x(250)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(275)} y1={marginTop} x2={x(275)} y2={height - marginBottom}/>
+              <line color='grey' x1={x(300)} y1={marginTop} x2={x(300)} y2={height - marginBottom}/>
+
+              <line color='grey' opacity='0.4' x1={x(400)} y1={marginTop} x2={x(400)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(500)} y1={marginTop} x2={x(500)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(600)} y1={marginTop} x2={x(600)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(700)} y1={marginTop} x2={x(700)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(800)} y1={marginTop} x2={x(800)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(900)} y1={marginTop} x2={x(900)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(1000)} y1={marginTop} x2={x(1000)} y2={height - marginBottom}/>
             </g> 
             <path
               fill="none"
+              color='grey' 
               stroke="currentColor"
               strokeWidth="1.5"
-              d={line(points)}
+              d={line(curve1)}
             />
             <path
               fill="none"
+              color='grey' 
               stroke="currentColor"
               strokeWidth="1.5"
-              d={line(points2)}
+              d={line(curve2)}
             />
 
             <path
               fill="none"
+              color='grey' 
               stroke="currentColor"
               strokeWidth="1.5"
-              d={line(points3)}
+              d={line(curve3)}
             />
-             <path
+             {/* <path
               fill="none"
               stroke="currentColor"
               strokeWidth="1.5"
               d={line(data)}
-            /> 
+            />  */}
 
               <path
               fill="none"
@@ -102,46 +129,77 @@ export default function LinePlot({
               strokeWidth="1.5"
               d={baseGraph(data)}
             /> 
-
-{/* <g  fill="white" stroke="currentColor" strokeWidth="1.5">
-          
-<path
-      d={linePath}
-      stroke="#9a6fb0"
-      fill="none"
-      strokeWidth={2}
-    />
-         
-   
-    
-     </g>  */}
-       {/* {data.map((d, i) => (
-         <g key={i} fill="white" stroke="currentColor" strokeWidth="1.5">
-          
-             <circle cx={x(i)} cy={y(d)} r="0.2" style={{ transition: "ease-out .1s"  }} strokeLinejoin="round" />
-            
-      
-       
-        </g> 
-           ))}     */}
-        {/* {data.map((d) => {
-          const transform = `translate(0,${y(1) - y(d)})`;
-
-          return (
-            <g key={d}>
-              <path
-                fill="none"
-                transform={transform}
-                //stroke={(d)}
-                strokeWidth="1.5"
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                d={line2(d)}
-              />
-            </g>
-          );
-        })} */}
       </svg>
+      <svg width={width} height={height} id='my-svg'>
+            {/* <g ref={gx1} transform={`translate(0,${height - marginBottom})`}/> */}
+
+            {/* <g  transform={`translate(${marginLeft},0)`} /> */}
+            <g fill="white" color='grey'  stroke="currentColor" strokeWidth="1.5">
+              <line color='grey'  x1={marginLeft} y1={marginTop} x2={width - marginRight} y2={marginTop}/>
+
+              <line color='grey'  x1={marginLeft} y1={marginTop} x2={marginLeft} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(25)} y1={marginTop} x2={x(25)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(50)} y1={marginTop} x2={x(50)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(75)} y1={marginTop} x2={x(75)} y2={height - marginBottom}/>
+              <line color='grey' x1={x(100)} y1={marginTop} x2={x(100)} y2={height - marginBottom}/>
+
+              <line color='grey' opacity='0.4' x1={x(125)} y1={marginTop} x2={x(125)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(150)} y1={marginTop} x2={x(150)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(175)} y1={marginTop} x2={x(175)} y2={height - marginBottom}/>
+              <line color='grey'  x1={x(200)} y1={marginTop} x2={x(200)} y2={height - marginBottom}/>
+
+              <line color='grey' opacity='0.4' x1={x(225)} y1={marginTop} x2={x(225)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(250)} y1={marginTop} x2={x(250)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(275)} y1={marginTop} x2={x(275)} y2={height - marginBottom}/>
+              <line color='grey' x1={x(300)} y1={marginTop} x2={x(300)} y2={height - marginBottom}/>
+
+              <line color='grey' opacity='0.4' x1={x(400)} y1={marginTop} x2={x(400)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(500)} y1={marginTop} x2={x(500)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(600)} y1={marginTop} x2={x(600)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(700)} y1={marginTop} x2={x(700)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(800)} y1={marginTop} x2={x(800)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(900)} y1={marginTop} x2={x(900)} y2={height - marginBottom}/>
+              <line color='grey' opacity='0.4' x1={x(1000)} y1={marginTop} x2={x(1000)} y2={height - marginBottom}/>
+            </g> 
+            <path
+              fill="none"
+              color='grey' 
+              stroke="currentColor"
+              strokeWidth="1.5"
+              d={line(curve4)}
+            />
+             <path
+              fill="none"
+              color='grey' 
+              stroke="currentColor"
+              strokeWidth="1.5"
+              d={line(curve5)}
+            />
+
+            <path
+              fill="none"
+              color='grey' 
+              stroke="currentColor"
+              strokeWidth="1.5"
+              d={line(curve6)}
+            /> 
+             {/* <path
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              d={line(data)}
+            />  */}
+
+              <path
+              fill="none"
+              stroke="steelblue"
+              strokeWidth="1.5"
+              d={baseGraph2(data2)}
+            /> 
+      </svg>
+
+      </div>
+      
 
 
       
