@@ -29,48 +29,52 @@ const App = () => {
 
   useEffect(() => {
     function onConnect() {
-      console.log('call')
       setIsConnected(true);
     }
 
     function onDisconnect() {
       setIsConnected(false);
     }
-
-    function onFooEvent(value) {
-      console.log(value);
-
+    
+    let marker1Item = marker1stItem ;
+    function onRhythmEventConnect(value) {
       if (value && value.flightInfo) {
         const { top, left } = value.flightInfo;
         const newData = { x: top, y: left };
-
-        marker1stItem.push(newData)
-        setMarker1stItem([...marker1stItem]);
+        if(top === 0){
+          marker1Item = []
+        } else {
+          marker1Item.push(newData)
+        }
+        setMarker1stItem([...marker1Item]);
 
       }
     }
 
-    function onFooEventATC(value) {
-      console.log(value);
-      if (value && value.flightInfo) {
+    let marker2Item = marker2ndItem ;
+    function onAtcEventConnect(value) {
+      if (value && value?.flightInfo) {
         const { top, left } = value.flightInfo;
-        //const newData = [{ x: top, y: left }];
         const newData = { x: top, y: left };
-
-        marker2ndItem.push(newData)
-        setMarker2ndItem([...marker2ndItem]);
+        if(top === 0){
+          marker2Item = []
+        } else {
+          marker2Item.push(newData)
+        }
+        setMarker2ndItem([...marker2Item]);
       }
     }
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("Rhythm", onFooEvent);
-    socket.on("ATC", onFooEventATC);
+    socket.on("Rhythm", onRhythmEventConnect);
+    socket.on("ATC", onAtcEventConnect);
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.off("foo", onFooEvent);
+      socket.off("Rhythm", onRhythmEventConnect);
+      socket.off("ATC", onAtcEventConnect);
     };
   }, []);
 
@@ -89,7 +93,7 @@ const App = () => {
   // console.log("isConnected", isConnected, fooEvents);
 
   
-  const [marker2ndItem, setMarker2ndItem] = useState([{ x: 100, y: 800 }]);
+  const [marker2ndItem, setMarker2ndItem] = useState([]);
 
   return (
     <div style={{ height: "100%", width: "100%" }}>

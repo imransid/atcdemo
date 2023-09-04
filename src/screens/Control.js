@@ -19,8 +19,8 @@ const socket = io.connect(SOCKET_SERVER_URL);
 
 const App = () => {
   // const [marker1stItem, setMarker1stItem] = useState([{ x: 0, y: 200 }]);
-  const [marker1stItem, setMarker1stItem] = useState([{ x: 0, y: 1000 }]);
-  const [marker2ndItem, setMarker2ndItem] = useState([{ x: 0, y: 400 }]);
+  const [marker1stItem, setMarker1stItem] = useState([{ x: 0, y: 100 }]);
+  const [marker2ndItem, setMarker2ndItem] = useState([{ x: 0, y: 100 }]);
   const [pointerPosition, setPointerPosition] = useState({ x: 10, y: 10 }); // Initial position
   const [moveStatusLeftRight, setMoveStatusLeftRight] = useState(false); // Initial position
   const [moveStatusAtcUPDown, setMoveStatusAtcUpDown] = useState(false); // Initial position
