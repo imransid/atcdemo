@@ -28,21 +28,29 @@ export default function LinePlot({
     //const curve6 = [[marginLeft+200, height-200],[marginLeft+900, height-170],[width-marginRight, height - marginBottom]];
 
     const x = d3.scaleLinear().domain([0, 1000]).range([ marginLeft, (width - marginRight) ]);
-
-    //console.log('Domain',d3.extent(data, function(d) { return  d.x; }));
-    //console.log('Range : [',marginLeft,',',(width - marginRight),']');
   
 
     const y = d3.scaleLinear().domain([0,d3.max(data, function(d){ return d.y})]).range([ (height - marginBottom), marginTop]);
+
+
+    const y_y = d3.scaleLinear().domain([0, 1000]).range([0, 1000]);
+    const x_x = d3.scaleLinear().domain([0, 1000]).range([0, 1000]);
+
+    const baseGraphExtra = d3.line().x(function(d){return x_x(
+      d.x)})
+    .y(function(d){return y_y(d.y)})
 
     const y1 = d3.scaleLinear().domain([0,d3.max(data2, function(d){ return d.y})]).range([ (height - marginBottom), marginTop]);
     //d3.scaleLinear(d3.extent(data), [height - marginBottom, marginTop]);
 
     const line = d3.line().curve(d3.curveNatural);
 
+
+
     const baseGraph =  d3.line()
                         .x(function(d){return x(d.x)})
                         .y(function(d){return y(d.y)})
+
 
     const baseGraph2 =  d3.line()
                         .x(function(d){return x(d.x)})
@@ -117,18 +125,13 @@ export default function LinePlot({
               strokeWidth="1.5"
               d={line(curve3)}
             />
-             {/* <path
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              d={line(data)}
-            />  */}
+
 
               <path
               fill="none"
               stroke="steelblue"
               strokeWidth="1.5"
-              d={baseGraph(data)}
+              d={baseGraphExtra(data)}
             /> 
       </svg>
       <svg width={width} height={height} id='my-svg'>
