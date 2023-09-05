@@ -107,14 +107,21 @@ export default function RhythmChart({
   ]);
 
 
+  const colorChecker = (val) => {
+
+    if(val > 80){
+        return "green"
+    }else{
+        return "red"
+    }
+
+  } 
+
+
 
     return (
       <div style={{ background: 'black'}}>
      
-
-
-
-
       <svg width={width} height={height} id='my-svg'>
             <g ref={gx} color='grey'  transform={`translate(0,${height - marginBottom})`}/>
             <g  transform={`translate(${marginLeft},0)`} />
@@ -159,6 +166,21 @@ export default function RhythmChart({
               d={line(curve2)}
             />
 
+            {
+                console.log("width - marginRight", width - marginRight)
+            }
+
+            <text
+            x={(width - marginRight)- 80} // Adjust the X-coordinate to align with the top-right corner
+            y={marginTop + 10 } // Adjust the Y-coordinate to align with the top margin
+            fill= {colorChecker(pointerPosition.x)}//"white" // Text color
+            fontSize="16" // Font size
+            fontWeight="bold" // Font weight
+            >
+           {
+            pointerPosition.x
+           }
+            </text>
             <path
               fill="none"
               color='grey' 
