@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from "react";
-import LineBox from "../components/LineChart";
-import SingleLine from "../components/SingleLane";
 import io from "socket.io-client";
-import {
-  redLine1stPanel,
-  redLine2ndPanel,
-  green1stPanel,
-  green2ndPanel,
-  pinkValue1stPanel,
-  pinkValue2ndPanel,
-  fakeLineXX,
-  fakeLineYY,
-  fakeXX,
-  fakeYY,
-} from "./Data";
+import LinePlot from '../components/LinePlot';
+
 
 const SOCKET_SERVER_URL = "http://103.147.182.59:8878";
 const socket = io(SOCKET_SERVER_URL);
 
 const App = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
-  const [fooEvents, setFooEvents] = useState([]);
+ // const [fooEvents, setFooEvents] = useState([]);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -47,46 +35,70 @@ const App = () => {
     function onDisconnect() {
       setIsConnected(false);
     }
-
-    function onFooEvent(value) {
-      console.log(value);
-
+    
+    let marker1Item = marker1stItem ;
+    function onRhythmEventConnect(value) {
       if (value && value.flightInfo) {
         const { top, left } = value.flightInfo;
-        const newData = [{ x: top, y: left }];
-        setMarker1stItem(newData);
+        const newData = { x: top, y: left };
+        if(top === 0){
+          marker1Item = []
+        } else {
+          marker1Item.push(newData)
+        }
+        setMarker1stItem([...marker1Item]);
+
       }
     }
 
-    function onFooEventATC(value) {
-      console.log(value);
-      if (value && value.flightInfo) {
+    let marker2Item = marker2ndItem ;
+    function onAtcEventConnect(value) {
+      if (value && value?.flightInfo) {
         const { top, left } = value.flightInfo;
-        const newData = [{ x: top, y: left }];
-        setMarker2ndItem(newData);
+        const newData = { x: top, y: left };
+        if(top === 0){
+          marker2Item = []
+        } else {
+          marker2Item.push(newData)
+        }
+        setMarker2ndItem([...marker2Item]);
       }
     }
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("Rhythm", onFooEvent);
-    socket.on("ATC", onFooEventATC);
+    socket.on("Rhythm", onRhythmEventConnect);
+    socket.on("ATC", onAtcEventConnect);
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.off("foo", onFooEvent);
+      socket.off("Rhythm", onRhythmEventConnect);
+      socket.off("ATC", onAtcEventConnect);
     };
   }, []);
 
+  const [marker1stItem, setMarker1stItem] = useState([]);
+
+  // useEffect(()=> {
+  //   let i =0;
+  //   setInterval(()=> {
+  //     const newData = { x: i+20, y: i+50};
+  //     marker1stItem.push(newData)
+  //     setMarker1stItem([...marker1stItem]);
+  //     i=i+10
+  //   }, 1000)
+  // },[setMarker1stItem])
+
   // console.log("isConnected", isConnected, fooEvents);
 
-  const [marker1stItem, setMarker1stItem] = useState([{ x: 200, y: 200 }]);
-  const [marker2ndItem, setMarker2ndItem] = useState([{ x: 100, y: 800 }]);
+  
+  const [marker2ndItem, setMarker2ndItem] = useState([]);
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
-      <LineBox
+       <LinePlot data={marker1stItem}  data2={marker2ndItem}/>
+      {/* <LineBox
         redValue={redLine1stPanel}
         greenValue={green1stPanel}
         pinkValue={pinkValue1stPanel}
@@ -114,7 +126,7 @@ const App = () => {
         fakeY={fakeYY}
         windowWidth={windowWidth}
         color={"black"}
-      />
+      /> */}
     </div>
   );
 };
