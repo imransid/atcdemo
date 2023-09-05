@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import LinePlot from '../components/LinePlot';
-
+import LinePlot from "../components/LinePlot";
 
 const SOCKET_SERVER_URL = "http://103.147.182.59:8878";
 const socket = io(SOCKET_SERVER_URL);
 
 const App = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
- // const [fooEvents, setFooEvents] = useState([]);
+  // const [fooEvents, setFooEvents] = useState([]);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -35,31 +34,31 @@ const App = () => {
     function onDisconnect() {
       setIsConnected(false);
     }
-    
-    let marker1Item = marker1stItem ;
+
+    let marker1Item = marker1stItem;
     function onRhythmEventConnect(value) {
+      console.log("value", value);
       if (value && value.flightInfo) {
         const { top, left } = value.flightInfo;
         const newData = { x: top, y: left };
-        if(top === 0){
-          marker1Item = []
+        if (top === 0) {
+          marker1Item = [];
         } else {
-          marker1Item.push(newData)
+          marker1Item.push(newData);
         }
         setMarker1stItem([...marker1Item]);
-
       }
     }
 
-    let marker2Item = marker2ndItem ;
+    let marker2Item = marker2ndItem;
     function onAtcEventConnect(value) {
       if (value && value?.flightInfo) {
         const { top, left } = value.flightInfo;
         const newData = { x: top, y: left };
-        if(top === 0){
-          marker2Item = []
+        if (top === 0) {
+          marker2Item = [];
         } else {
-          marker2Item.push(newData)
+          marker2Item.push(newData);
         }
         setMarker2ndItem([...marker2Item]);
       }
@@ -92,12 +91,11 @@ const App = () => {
 
   // console.log("isConnected", isConnected, fooEvents);
 
-  
   const [marker2ndItem, setMarker2ndItem] = useState([]);
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
-       <LinePlot data={marker1stItem}  data2={marker2ndItem}/>
+      <LinePlot data={marker1stItem} data2={marker2ndItem} />
       {/* <LineBox
         redValue={redLine1stPanel}
         greenValue={green1stPanel}

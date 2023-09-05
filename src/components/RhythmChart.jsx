@@ -1,6 +1,9 @@
 import React, {useRef, useEffect, useState} from 'react'
 import * as d3 from "d3";
 import io from "socket.io-client";
+import { PiArrowFatUpDuotone, PiArrowFatDownDuotone } from 'react-icons/pi';
+
+
 
 const SOCKET_SERVER_URL = "http://103.147.182.59:8878";
 const socket = io.connect(SOCKET_SERVER_URL);
@@ -30,6 +33,7 @@ export default function RhythmChart({
     const line = d3.line().curve(d3.curveNatural);
                         
     const [pointerPosition, setPointerPosition] = useState({ x: marginLeft, y: y(height - 339)});
+    const [keyStatus, setKeyStatus] = useState("");
 
     const sendRhythmEvent = async ( data) => {
         const emitPayload = {
@@ -42,6 +46,7 @@ export default function RhythmChart({
             right: 75.0,
             down: 10.0,
             speed: 10,
+            keyStatus: keyStatus
           },
         };
 
@@ -79,9 +84,11 @@ export default function RhythmChart({
           switch (event.key) {
             case "ArrowUp":
               updatedPosition.y =  updatedPosition.y - step;
+              setKeyStatus("up")
               break;
             case "ArrowDown":
               updatedPosition.y =  updatedPosition.y + step;
+              setKeyStatus("down")
               break;
             default:
               return;
@@ -103,7 +110,8 @@ export default function RhythmChart({
     accessControlStatus,
     setPointerPosition,
     pointerPosition,
-    sendRhythmEvent
+    sendRhythmEvent,
+    setKeyStatus
   ]);
 
 
@@ -116,6 +124,14 @@ export default function RhythmChart({
   useEffect(() => void 
   d3.select(gx.current).call(d3.axisBottom(x).tickSize(0)),[gx, x]
 );
+
+
+const GetKeyIcon = () => {
+
+      if(keyStatus == '') return <></>
+
+    return keyStatus === 'up' ?  <PiArrowFatUpDuotone size={26} color='gray' /> : <PiArrowFatDownDuotone size={26} color='gray' /> 
+}
 
 
     return (
@@ -165,10 +181,6 @@ export default function RhythmChart({
               d={line(curve2)}
             />
 
-            {
-                console.log(pointerPosition.y)
-            }
-
             <text
             x={(width - marginRight)- 80} // Adjust the X-coordinate to align with the top-right corner
             y={marginTop + 10 } // Adjust the Y-coordinate to align with the top margin
@@ -184,6 +196,10 @@ export default function RhythmChart({
             pointerPosition.y
            }
             </text>
+
+
+         <GetKeyIcon />
+
             <path
               fill="none"
               color='grey' 
@@ -198,11 +214,10 @@ export default function RhythmChart({
                 r={10} // Adjust the radius of the pointer
                 fill='red' // Change the fill color to your liking
               />
+
       </svg>
 
       </div>
-      
-
 
       
     );
