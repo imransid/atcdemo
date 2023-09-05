@@ -62,14 +62,6 @@ export default function LinePlot({
       d3.select(gx.current).call(d3.axisBottom(x).tickSize(0)),[gx, x]
     );
 
-    // useEffect(() => void 
-    //   d3.select(gx1.current).call(d3.axisBottom(x).tickSize(0)),[gx1, x]
-    // );
-
-    // useEffect(() => void 
-    //   d3.select(gy.current).call(d3.axisLeft(y).tickSize(0)), [gy, y]
-    // );
-
 
     return (
       <div style={{ background: 'black'}}>
