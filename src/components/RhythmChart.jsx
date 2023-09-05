@@ -78,10 +78,10 @@ export default function RhythmChart({
         updatedPosition = { ...pointerPosition };
           switch (event.key) {
             case "ArrowUp":
-              updatedPosition.y =  updatedPosition.y + step;
+              updatedPosition.y =  updatedPosition.y - step;
               break;
             case "ArrowDown":
-              updatedPosition.y =  updatedPosition.y - step;
+              updatedPosition.y =  updatedPosition.y + step;
               break;
             default:
               return;
@@ -109,14 +109,13 @@ export default function RhythmChart({
 
   const colorChecker = (val) => {
 
-    if(val > 80){
-        return "green"
-    }else{
-        return "red"
-    }
+    return val < 200 ? 'green' : 'red'
 
   } 
 
+  useEffect(() => void 
+  d3.select(gx.current).call(d3.axisBottom(x).tickSize(0)),[gx, x]
+);
 
 
     return (
@@ -167,18 +166,22 @@ export default function RhythmChart({
             />
 
             {
-                console.log("width - marginRight", width - marginRight)
+                console.log(pointerPosition.y)
             }
 
             <text
             x={(width - marginRight)- 80} // Adjust the X-coordinate to align with the top-right corner
             y={marginTop + 10 } // Adjust the Y-coordinate to align with the top margin
-            fill= {colorChecker(pointerPosition.x)}//"white" // Text color
+            fill= {colorChecker(pointerPosition.y)}//"white" // Text color
             fontSize="16" // Font size
             fontWeight="bold" // Font weight
             >
            {
-            pointerPosition.x
+            pointerPosition.x 
+           }
+            - 
+           {
+            pointerPosition.y
            }
             </text>
             <path
