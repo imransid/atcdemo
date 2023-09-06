@@ -19,19 +19,19 @@ export default function ATCChart({
   const gx = useRef();
 
   const curve1 = [
-    [marginLeft + 200, height - 300],
-    [marginLeft + 900, height - 270],
-    [width - marginRight, height - marginBottom],
+    [marginLeft + 200, height - 160],
+    [marginLeft + 900, height - 170],
+    [width - marginRight, marginTop],
   ];
   const curve2 = [
-    [marginLeft, height - 250],
+    [marginLeft, height - 220],
     [marginLeft + 900, height - 220],
-    [width - marginRight, height - marginBottom],
+    [width - marginRight, marginTop],
   ];
   const curve3 = [
-    [marginLeft + 200, height - 200],
-    [marginLeft + 900, height - 170],
-    [width - marginRight, height - marginBottom],
+    [marginLeft + 200, height - 250],
+    [marginLeft + 900, height - 270],
+    [width - marginRight, marginTop],
   ];
 
   const x = d3
@@ -147,13 +147,14 @@ export default function ATCChart({
   return (
     <div style={{ background: "black" }}>
       <svg width={width} height={height} id="my-svg">
-        <g
+        {/* <g
           ref={gx}
           color="grey"
           transform={`translate(0,${height - marginBottom})`}
-        />
+        /> */}
         <g transform={`translate(${marginLeft},0)`} />
         <g fill="white" stroke="currentColor" strokeWidth="1.5">
+          <line color='grey'  x1={marginLeft} y1={marginTop} x2={width - marginRight} y2={marginTop}/>
           <line
             color="grey"
             x1={marginLeft}

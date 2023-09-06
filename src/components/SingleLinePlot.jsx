@@ -147,13 +147,14 @@ const SingleLinePlot = ({
 
   return (
     <svg width={width} height={height} id="my-svg">
-      <g
+      { status !== "ATC" && <g
         ref={gx}
         color="grey"
         transform={`translate(0,${height - marginBottom})`}
-      />
+      />}
       <g transform={`translate(${marginLeft},0)`} />
       <g fill="white" stroke="currentColor" strokeWidth="1.5">
+        { status === "ATC" &&<line color='grey'  x1={marginLeft} y1={marginTop} x2={width - marginRight} y2={marginTop}/>}
         <line
           color="grey"
           x1={marginLeft}
