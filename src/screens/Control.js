@@ -246,9 +246,8 @@
 
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import LinePlot from "../components/LinePlot";
-
 import RhythmChart from "../components/RhythmChart";
+import ATCChart from "../components/ATCChart";
 
 const SOCKET_SERVER_URL = "http://103.147.182.59:8878";
 const socket = io(SOCKET_SERVER_URL);
@@ -283,6 +282,8 @@ const App = () => {
       {/* <LinePlot data={marker1stItem} data2={marker2ndItem} /> */}
 
       <RhythmChart data={marker1stItem} accessControlStatus={true} />
+
+      <ATCChart data={marker1stItem} accessControlStatus={true} />
       {/* <LineBox
         redValue={redLine1stPanel}
         greenValue={green1stPanel}

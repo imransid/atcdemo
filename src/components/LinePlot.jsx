@@ -62,6 +62,38 @@ export default function LinePlot({
       d3.select(gx.current).call(d3.axisBottom(x).tickSize(0)),[gx, x]
     );
 
+    // const [pointerPosition, setPointerPosition] = useState({ x: 0, y: 0});
+
+    // useEffect(() => {
+
+    //   const lastIndex = data.length - 1;
+    //   const lastObject = jsonArray[lastIndex];
+
+
+    // },[data, pointerPosition, setPointerPosition])
+
+    const getValueLastObject = (jsonArray) => {
+      
+      const lastIndex = jsonArray.length - 1;
+      const lastObject = jsonArray[lastIndex];
+
+
+     // console.log("lastObject", lastObject)
+
+      return lastObject
+      //return val < 200 ? 'green' : 'red'
+    } 
+
+
+    const getValueColor = (jsonArray) => {
+      
+      const lastIndex = jsonArray.length - 1;
+      const lastObject = jsonArray[lastIndex];
+
+
+      return lastObject.y < 200 ? 'green' : 'red'
+    } 
+
 
     return (
       <div style={{ background: 'black'}}>
@@ -109,6 +141,29 @@ export default function LinePlot({
               strokeWidth="1.5"
               d={line(curve2)}
             />
+
+
+
+
+{
+   data.length > 0 && <text
+   x={(width - marginRight)- 80} // Adjust the X-coordinate to align with the top-right corner
+   y={marginTop + 10 } // Adjust the Y-coordinate to align with the top margin
+   fill= {getValueColor(data)} // Text color
+   fontSize="16" // Font size
+   fontWeight="bold" // Font weight
+   >
+  {
+getValueLastObject(data).x 
+  }
+   - 
+  {
+    getValueLastObject(data).y
+  }
+   </text>
+}
+
+
 
             <path
               fill="none"
