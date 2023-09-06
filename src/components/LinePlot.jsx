@@ -1,258 +1,107 @@
-import React, {useRef, useEffect} from 'react'
+import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
+import SingleLinePlot from "./SingleLinePlot";
+import io from "socket.io-client";
+
+const SOCKET_SERVER_URL = "http://103.147.182.59:8878";
+const socket = io(SOCKET_SERVER_URL);
 
 export default function LinePlot({
-    data,
-    data2,
-    width = window.innerWidth,
-    height = 400,
-    marginTop = 10,
-    marginRight = 30,
-    marginBottom = 30,
-    marginLeft = 60
-  }) {
+  width = window.innerWidth,
+  height = 400,
+  marginTop = 10,
+  marginRight = 30,
+  marginBottom = 30,
+  marginLeft = 60,
+}) {
+  const [isConnected, setIsConnected] = useState(socket.connected);
+  const [marker1stItem, setMarker1stItem] = useState([]);
+  const [marker2ndItem, setMarker2ndItem] = useState([]);
+  const [iconStatusRhythm, setIconStatusRhythm] = useState(-1);
+  const [iconStatusAtc, setIconStatusAtc] = useState(-1);
 
-    const gx = useRef();
-    const gy = useRef();
-    const gx1 = useRef();
+  useEffect(() => {
+    function onConnect() {
+      setIsConnected(true);
+    }
 
-    const curve1 = [[marginLeft+200, height-300],[marginLeft+900, height-270],[width-marginRight, height - marginBottom]];
-    const curve2 = [[marginLeft, height-250],[marginLeft+900, height-220],[width-marginRight, height - marginBottom]];
-    const curve3 = [[marginLeft+200, height-200],[marginLeft+900, height-170],[width-marginRight, height - marginBottom]];
+    function onDisconnect() {
+      setIsConnected(false);
+    }
 
+    let marker1Item = marker1stItem;
+    function onRhythmEventConnect(value) {
+      console.log(value);
+      if (value && value.flightInfo) {
+        const { top, left, speed } = value.flightInfo;
+        const newData = { x: top, y: left };
 
-    const curve4 = [[marginLeft+200, height-160],[marginLeft+900, height-170],[width-marginRight, marginTop]];
-    const curve5 = [[marginLeft, height-220],[marginLeft+900, height-220],[width-marginRight, marginTop]];
-    const curve6 = [[marginLeft+200, height-250],[marginLeft+900, height-270],[width-marginRight, marginTop]];
-    //const curve5 = [[marginLeft, height-250],[marginLeft+900, height-220],[width-marginRight, height - marginBottom]];
-    //const curve6 = [[marginLeft+200, height-200],[marginLeft+900, height-170],[width-marginRight, height - marginBottom]];
+        setIconStatusRhythm(speed);
 
-    const x = d3.scaleLinear().domain([0, 1000]).range([ marginLeft, (width - marginRight) ]);
-  
+        if (top === 0) {
+          marker1Item = [];
+        } else {
+          marker1Item.push(newData);
+        }
+        setMarker1stItem([...marker1Item]);
+      }
+    }
 
-    const y = d3.scaleLinear().domain([0,d3.max(data, function(d){ return d.y})]).range([ (height - marginBottom), marginTop]);
+    let marker2Item = marker2ndItem;
+    function onAtcEventConnect(value) {
+      if (value && value?.flightInfo) {
+        const { top, left, speed } = value.flightInfo;
+        const newData = { x: top, y: left };
+        setIconStatusAtc(speed);
+        if (top === 0) {
+          marker2Item = [];
+        } else {
+          marker2Item.push(newData);
+        }
+        setMarker2ndItem([...marker2Item]);
+      }
+    }
 
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+    socket.on("Rhythm", onRhythmEventConnect);
+    socket.on("ATC", onAtcEventConnect);
 
-    const y_y = d3.scaleLinear().domain([0, 1000]).range([0, 1000]);
-    const x_x = d3.scaleLinear().domain([0, 1000]).range([0, 1000]);
+    return () => {
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+      socket.off("Rhythm", onRhythmEventConnect);
+      socket.off("ATC", onAtcEventConnect);
+    };
+  }, []);
 
-    const baseGraphExtra = d3.line().x(function(d){return x_x(
-      d.x)})
-    .y(function(d){return y_y(d.y)})
+  return (
+    <div style={{ background: "black" }}>
+      <SingleLinePlot
+        data={marker1stItem}
+        data2={[]}
+        width={width}
+        height={height}
+        marginBottom={marginBottom}
+        marginLeft={marginLeft}
+        marginRight={marginRight}
+        marginTop={marginTop}
+        status={"Rhythm"}
+        iconStatus={iconStatusRhythm}
+      />
 
-    const y1 = d3.scaleLinear().domain([0,d3.max(data2, function(d){ return d.y})]).range([ (height - marginBottom), marginTop]);
-    //d3.scaleLinear(d3.extent(data), [height - marginBottom, marginTop]);
-
-    const line = d3.line().curve(d3.curveNatural);
-
-
-
-    const baseGraph =  d3.line()
-                        .x(function(d){return x(d.x)})
-                        .y(function(d){return y(d.y)})
-
-
-    const baseGraph2 =  d3.line()
-                        .x(function(d){return x(d.x)})
-                        .y(function(d){return y1(d.y)})
-                        
-
-
-    useEffect(() => void 
-      d3.select(gx.current).call(d3.axisBottom(x).tickSize(0)),[gx, x]
-    );
-
-    // const [pointerPosition, setPointerPosition] = useState({ x: 0, y: 0});
-
-    // useEffect(() => {
-
-    //   const lastIndex = data.length - 1;
-    //   const lastObject = jsonArray[lastIndex];
-
-
-    // },[data, pointerPosition, setPointerPosition])
-
-    const getValueLastObject = (jsonArray) => {
-      
-      const lastIndex = jsonArray.length - 1;
-      const lastObject = jsonArray[lastIndex];
-
-
-     // console.log("lastObject", lastObject)
-
-      return lastObject
-      //return val < 200 ? 'green' : 'red'
-    } 
-
-
-    const getValueColor = (jsonArray) => {
-      
-      const lastIndex = jsonArray.length - 1;
-      const lastObject = jsonArray[lastIndex];
-
-
-      return lastObject.y < 200 ? 'green' : 'red'
-    } 
-
-
-    return (
-      <div style={{ background: 'black'}}>
-        <svg width={width} height={height} id='my-svg'>
-          
-            <g ref={gx} color='grey'  transform={`translate(0,${height - marginBottom})`}/>
-            <g  transform={`translate(${marginLeft},0)`} />
-            <g fill="white" stroke="currentColor" strokeWidth="1.5">
-
-              <line color='grey'  x1={marginLeft} y1={marginTop} x2={marginLeft} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(25)} y1={marginTop} x2={x(25)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(50)} y1={marginTop} x2={x(50)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(75)} y1={marginTop} x2={x(75)} y2={height - marginBottom}/>
-              <line color='grey' x1={x(100)} y1={marginTop} x2={x(100)} y2={height - marginBottom}/>
-
-              <line color='grey' opacity='0.4' x1={x(125)} y1={marginTop} x2={x(125)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(150)} y1={marginTop} x2={x(150)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(175)} y1={marginTop} x2={x(175)} y2={height - marginBottom}/>
-              <line color='grey'  x1={x(200)} y1={marginTop} x2={x(200)} y2={height - marginBottom}/>
-
-              <line color='grey' opacity='0.4' x1={x(225)} y1={marginTop} x2={x(225)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(250)} y1={marginTop} x2={x(250)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(275)} y1={marginTop} x2={x(275)} y2={height - marginBottom}/>
-              <line color='grey' x1={x(300)} y1={marginTop} x2={x(300)} y2={height - marginBottom}/>
-
-              <line color='grey' opacity='0.4' x1={x(400)} y1={marginTop} x2={x(400)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(500)} y1={marginTop} x2={x(500)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(600)} y1={marginTop} x2={x(600)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(700)} y1={marginTop} x2={x(700)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(800)} y1={marginTop} x2={x(800)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(900)} y1={marginTop} x2={x(900)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(1000)} y1={marginTop} x2={x(1000)} y2={height - marginBottom}/>
-            </g> 
-            <path
-              fill="none"
-              color='grey' 
-              stroke="currentColor"
-              strokeWidth="1.5"
-              d={line(curve1)}
-            />
-            <path
-              fill="none"
-              color='grey' 
-              stroke="currentColor"
-              strokeWidth="1.5"
-              d={line(curve2)}
-            />
-
-
-
-
-{
-   data.length > 0 && <text
-   x={(width - marginRight)- 80} // Adjust the X-coordinate to align with the top-right corner
-   y={marginTop + 10 } // Adjust the Y-coordinate to align with the top margin
-   fill= {getValueColor(data)} // Text color
-   fontSize="16" // Font size
-   fontWeight="bold" // Font weight
-   >
-  {
-getValueLastObject(data).x 
-  }
-   - 
-  {
-    getValueLastObject(data).y
-  }
-   </text>
-}
-
-
-
-            <path
-              fill="none"
-              color='grey' 
-              stroke="currentColor"
-              strokeWidth="1.5"
-              d={line(curve3)}
-            />
-
-
-              <path
-              fill="none"
-              stroke="steelblue"
-              strokeWidth="1.5"
-              d={baseGraphExtra(data)}
-            /> 
-      </svg>
-      <svg width={width} height={height} id='my-svg'>
-            {/* <g ref={gx1} transform={`translate(0,${height - marginBottom})`}/> */}
-
-            {/* <g  transform={`translate(${marginLeft},0)`} /> */}
-            <g fill="white" color='grey'  stroke="currentColor" strokeWidth="1.5">
-              <line color='grey'  x1={marginLeft} y1={marginTop} x2={width - marginRight} y2={marginTop}/>
-
-              <line color='grey'  x1={marginLeft} y1={marginTop} x2={marginLeft} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(25)} y1={marginTop} x2={x(25)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(50)} y1={marginTop} x2={x(50)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(75)} y1={marginTop} x2={x(75)} y2={height - marginBottom}/>
-              <line color='grey' x1={x(100)} y1={marginTop} x2={x(100)} y2={height - marginBottom}/>
-
-              <line color='grey' opacity='0.4' x1={x(125)} y1={marginTop} x2={x(125)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(150)} y1={marginTop} x2={x(150)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(175)} y1={marginTop} x2={x(175)} y2={height - marginBottom}/>
-              <line color='grey'  x1={x(200)} y1={marginTop} x2={x(200)} y2={height - marginBottom}/>
-
-              <line color='grey' opacity='0.4' x1={x(225)} y1={marginTop} x2={x(225)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(250)} y1={marginTop} x2={x(250)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(275)} y1={marginTop} x2={x(275)} y2={height - marginBottom}/>
-              <line color='grey' x1={x(300)} y1={marginTop} x2={x(300)} y2={height - marginBottom}/>
-
-              <line color='grey' opacity='0.4' x1={x(400)} y1={marginTop} x2={x(400)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(500)} y1={marginTop} x2={x(500)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(600)} y1={marginTop} x2={x(600)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(700)} y1={marginTop} x2={x(700)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(800)} y1={marginTop} x2={x(800)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(900)} y1={marginTop} x2={x(900)} y2={height - marginBottom}/>
-              <line color='grey' opacity='0.4' x1={x(1000)} y1={marginTop} x2={x(1000)} y2={height - marginBottom}/>
-            </g> 
-            <path
-              fill="none"
-              color='grey' 
-              stroke="currentColor"
-              strokeWidth="1.5"
-              d={line(curve4)}
-            />
-             <path
-              fill="none"
-              color='grey' 
-              stroke="currentColor"
-              strokeWidth="1.5"
-              d={line(curve5)}
-            />
-
-            <path
-              fill="none"
-              color='grey' 
-              stroke="currentColor"
-              strokeWidth="1.5"
-              d={line(curve6)}
-            /> 
-             {/* <path
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              d={line(data)}
-            />  */}
-
-              <path
-              fill="none"
-              stroke="steelblue"
-              strokeWidth="1.5"
-              d={baseGraph2(data2)}
-            /> 
-      </svg>
-
-      </div>
-      
-
-
-      
-    );
+      <SingleLinePlot
+        data={[]}
+        data2={marker2ndItem}
+        width={width}
+        height={height}
+        marginBottom={marginBottom}
+        marginLeft={marginLeft}
+        marginRight={marginRight}
+        marginTop={marginTop}
+        status={"ATC"}
+        iconStatus={iconStatusAtc}
+      />
+    </div>
+  );
 }
