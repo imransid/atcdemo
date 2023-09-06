@@ -46,7 +46,7 @@ export default function RhythmChart({
             right: 75.0,
             down: 10.0,
             speed: 10,
-            keyStatus: keyStatus
+            speed: keyStatus === "" ? -1 : keyStatus === "up" ? 0 : 1,
           },
         };
 

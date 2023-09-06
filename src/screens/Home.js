@@ -37,7 +37,6 @@ const App = () => {
 
     let marker1Item = marker1stItem;
     function onRhythmEventConnect(value) {
-      console.log("value", value);
       if (value && value.flightInfo) {
         const { top, left } = value.flightInfo;
         const newData = { x: top, y: left };
@@ -52,6 +51,7 @@ const App = () => {
 
     let marker2Item = marker2ndItem;
     function onAtcEventConnect(value) {
+      console.log("value", value);
       if (value && value?.flightInfo) {
         const { top, left } = value.flightInfo;
         const newData = { x: top, y: left };
