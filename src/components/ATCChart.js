@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import io from "socket.io-client";
 import { PiArrowFatLeftDuotone, PiArrowFatRightDuotone } from "react-icons/pi";
 
-const SOCKET_SERVER_URL = "http://103.147.182.59:8878";
+const SOCKET_SERVER_URL = "ws://172.30.22.236:3000";
 const socket = io.connect(SOCKET_SERVER_URL);
 
 export default function ATCChart({
@@ -19,19 +19,19 @@ export default function ATCChart({
   const gx = useRef();
 
   const curve1 = [
-    [marginLeft + 200, height - 160],
+    [marginLeft + 200, height - 140],
     [marginLeft + 900, height - 170],
-    [width - marginRight, marginTop],
+    [width - marginRight, marginTop +100],
   ];
   const curve2 = [
     [marginLeft, height - 220],
     [marginLeft + 900, height - 220],
-    [width - marginRight, marginTop],
+    [width - marginRight, marginTop+100],
   ];
   const curve3 = [
     [marginLeft + 200, height - 250],
     [marginLeft + 900, height - 270],
-    [width - marginRight, marginTop],
+    [width - marginRight, marginTop+100],
   ];
 
   const x = d3
@@ -74,10 +74,13 @@ export default function ATCChart({
   useEffect(() => {
     const interval = setInterval(() => {
       setPointerPosition((prevMarker) => {
-        const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10;
+        const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10 ;
+        console.log('x(0)',x(0))
+        console.log('x(10)',x(10))
+        console.log('x(1000)',x(1000))
 
         let return_data = { y: prevMarker.y, x: newX1 };
-        sendRhythmEvent(return_data);
+        //sendRhythmEvent(return_data);
         return return_data;
       });
     }, 1000);
@@ -329,7 +332,7 @@ export default function ATCChart({
           strokeWidth="1.5"
           d={line(curve2)}
         />
-
+{/* 
         <text
           x={width - marginRight - 80} // Adjust the X-coordinate to align with the top-right corner
           y={marginTop + 10} // Adjust the Y-coordinate to align with the top margin
@@ -338,7 +341,7 @@ export default function ATCChart({
           fontWeight="bold" // Font weight
         >
           {pointerPosition.x}-{pointerPosition.y}
-        </text>
+        </text> */}
 
         <GetKeyIcon />
 
@@ -349,6 +352,31 @@ export default function ATCChart({
           strokeWidth="1.5"
           d={line(curve3)}
         />
+
+<defs>
+            <filter x="0" y="0" width="1" height="1" id="solid">
+              <feFlood floodColor="white" result="bg" />
+              <feMerge>
+                <feMergeNode in="bg"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+        </defs>
+
+<text x={pointerPosition.x} y={pointerPosition.y - 30} 
+        //style={{background: 'white'}}
+        //fill="white"
+        filter="url(#solid)"
+          textAnchor="middle"
+          stroke="black"
+          strokeWidth="1px"
+          alignmentBaseline="middle"
+          > {pointerPosition.y < y(height - 300) ? pointerPosition.y : - pointerPosition.y} / {
+              parseFloat(
+                Math.atan2(Math.abs(pointerPosition.y - (height - 220)), Math.abs(pointerPosition.x - (marginLeft + 900))) * 180/ Math.PI
+                ).toFixed(2)
+          }
+          </text>
 
         <circle
           cx={pointerPosition.x}

@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import SingleLinePlot from "./SingleLinePlot";
 import io from "socket.io-client";
 
-const SOCKET_SERVER_URL = "http://103.147.182.59:8878";
+const SOCKET_SERVER_URL = "ws://172.30.22.236:3000";
 const socket = io(SOCKET_SERVER_URL);
 
 export default function LinePlot({
@@ -22,6 +22,7 @@ export default function LinePlot({
 
   useEffect(() => {
     function onConnect() {
+      console.log('call')
       setIsConnected(true);
     }
 
