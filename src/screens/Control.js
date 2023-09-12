@@ -38,13 +38,15 @@ const App = ({
     return () => clearInterval(interval);
   }, [setPointerPosition]);
 
-  console.log("pointerPosition ----- ", pointerPosition);
-
   return (
     <div style={{ height: "100%", width: "100%" }}>
       {/* <LinePlot data={marker1stItem} data2={marker2ndItem} /> */}
 
-      <RhythmChart data={marker1stItem} accessControlStatus={true} />
+      <RhythmChart
+        data={pointerPosition}
+        accessControlStatus={true}
+        updateState={(e) => setPointerPosition(e)}
+      />
 
       <ATCChart data={marker1stItem} accessControlStatus={true} />
       {/* <LineBox

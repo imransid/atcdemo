@@ -15,13 +15,14 @@ export default function RhythmChart({
   marginBottom = 30,
   marginLeft = 60,
   accessControlStatus,
+  updateState,
 }) {
   const gx = useRef();
 
   const curve1 = [
     [marginLeft + 200, height - 300],
     [marginLeft + 900, height - 270],
-    [width - marginRight, height - marginBottom -50],
+    [width - marginRight, height - marginBottom - 50],
   ];
   const curve2 = [
     [marginLeft, height - 250],
@@ -32,14 +33,14 @@ export default function RhythmChart({
   const curve3 = [
     [marginLeft + 200, height - 200],
     [marginLeft + 900, height - 170],
-    [width - marginRight, height - marginBottom -50],
+    [width - marginRight, height - marginBottom - 50],
   ];
 
   const x = d3
     .scaleLinear()
     .domain([0, 1000])
     .range([marginLeft, width - marginRight]);
-    //console.log(x(marginLeft))
+  //console.log(x(marginLeft))
 
   //const y = d3.scaleLinear().domain([0,d3.max(data, function(d){ return d.y})]).range([ (height - marginBottom), marginTop]);
 
@@ -77,24 +78,24 @@ export default function RhythmChart({
   };
 
   useEffect(() => {
-    const cy = height - 220
-              const r =50
-              // const angleDegrees = Math.atan2(updatedPosition.y, updatedPosition.x ) * Math.PI / 180
-            const angleRadians = 3 * Math.PI / 180;
-              // const x = cx + r * Math.cos(angleRadians);
-              const y = cy + r * Math.sin(angleRadians);
-              console.log('y for 3 degree', y)
-    const interval = setInterval(() => {
-
-      setPointerPosition((prevMarker) => {
-        const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10;
-        console.log('setPointerPosition',x(newX1))
-        let return_data = { y: prevMarker.y, x: newX1 };
-        return return_data;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [setPointerPosition, sendRhythmEvent]);
+    // const cy = height - 220;
+    // const r = 50;
+    // // const angleDegrees = Math.atan2(updatedPosition.y, updatedPosition.x ) * Math.PI / 180
+    // const angleRadians = (3 * Math.PI) / 180;
+    // // const x = cx + r * Math.cos(angleRadians);
+    // const y = cy + r * Math.sin(angleRadians);
+    // console.log("y for 3 degree", y);
+    // const interval = setInterval(() => {
+    //   setPointerPosition((prevMarker) => {
+    //     const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10;
+    //     console.log("setPointerPosition", x(newX1));
+    //     let return_data = { y: prevMarker.y, x: newX1 };
+    //     return return_data;
+    //   });
+    // }, 1000);
+    // return () => clearInterval(interval);
+    sendRhythmEvent(data);
+  }, [data, sendRhythmEvent]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -104,27 +105,34 @@ export default function RhythmChart({
 
         if (accessControlStatus) {
           //   updatedPosition = { ...marker1stItem };
-          updatedPosition = { ...pointerPosition };
+
+          updatedPosition = { ...data };
           switch (event.key) {
             case "ArrowUp":
               updatedPosition.y = updatedPosition.y - step;
               updatedPosition.x = updatedPosition.x + step;
 
-              const angleDegrees = Math.atan2(Math.abs(updatedPosition.y - (height - 220)), Math.abs(updatedPosition.x  - (marginLeft + 900))) * 180/ Math.PI
-              console.log("angleDegrees",angleDegrees); 
+              const angleDegrees =
+                (Math.atan2(
+                  Math.abs(updatedPosition.y - (height - 220)),
+                  Math.abs(updatedPosition.x - (marginLeft + 900))
+                ) *
+                  180) /
+                Math.PI;
+              console.log("angleDegrees", angleDegrees);
               //marginLeft + 900, height - 220
               // const cx = marginLeft + 900
-              const cy = height - 220
-              const r =50
+              const cy = height - 220;
+              const r = 50;
               // const angleDegrees = Math.atan2(updatedPosition.y, updatedPosition.x ) * Math.PI / 180
-            const angleRadians = 3 * Math.PI / 180;
+              const angleRadians = (3 * Math.PI) / 180;
               // const x = cx + r * Math.cos(angleRadians);
               const y = cy + r * Math.sin(angleRadians);
-            console.log("arrow up",x, y); 
+              console.log("arrow up", x, y);
 
-              //updatedPosition.y = y 
+              //updatedPosition.y = y
 
-             //updatedPosition.x  = x
+              //updatedPosition.x  = x
 
               setKeyStatus("up");
               break;
@@ -136,7 +144,7 @@ export default function RhythmChart({
               return;
           }
         }
-
+        updateState(updatedPosition);
         setPointerPosition(updatedPosition);
         sendRhythmEvent(updatedPosition);
       }
@@ -150,9 +158,10 @@ export default function RhythmChart({
   }, [
     accessControlStatus,
     setPointerPosition,
-    pointerPosition,
+    data,
     sendRhythmEvent,
     setKeyStatus,
+    updateState,
   ]);
 
   const colorChecker = (val) => {
@@ -184,8 +193,20 @@ export default function RhythmChart({
         />
         <g transform={`translate(${marginLeft},0)`} />
         <g fill="white" stroke="currentColor" strokeWidth="1.5">
-        <line color='grey'  x1={marginLeft} y1={height - marginBottom -50} x2={width - marginRight} y2={height - marginBottom -50}/>
-        <line color="yellow" x1={marginLeft} x2={marginLeft + 400} y1={height - 182.6} y2={height - 245}/>
+          <line
+            color="grey"
+            x1={marginLeft}
+            y1={height - marginBottom - 50}
+            x2={width - marginRight}
+            y2={height - marginBottom - 50}
+          />
+          <line
+            color="yellow"
+            x1={marginLeft}
+            x2={marginLeft + 400}
+            y1={height - 182.6}
+            y2={height - 245}
+          />
           <line
             color="grey"
             x1={marginLeft}
@@ -361,16 +382,6 @@ export default function RhythmChart({
           d={line(curve2)}
         />
 
-        {/* <text
-          x={width - marginRight - 80} // Adjust the X-coordinate to align with the top-right corner
-          y={marginTop + 10} // Adjust the Y-coordinate to align with the top margin
-          fill={colorChecker(pointerPosition.y)} //"white" // Text color
-          fontSize="16" // Font size
-          fontWeight="bold" // Font weight
-        >
-          {pointerPosition.x}-{pointerPosition.y}
-        </text> */}
-
         <GetKeyIcon />
 
         <path
@@ -381,41 +392,42 @@ export default function RhythmChart({
           d={line(curve3)}
         />
 
-      {/* <defs>
-          <pattern id="image" x="0%" y="0%" height="100%" width="100%"
-                  viewBox="0 0 512 512">
-            <image x="0%" y="0%" width="512" height="512" color="white" href="../assets/cross-icon.png"></image>
-          </pattern>
-        </defs> */}
-
         <defs>
-            <filter x="0" y="0" width="1" height="1" id="solid">
-              <feFlood floodColor="white" result="bg" />
-              <feMerge>
-                <feMergeNode in="bg"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
+          <filter x="0" y="0" width="1" height="1" id="solid">
+            <feFlood floodColor="white" result="bg" />
+            <feMerge>
+              <feMergeNode in="bg" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
 
-        <text x={pointerPosition.x} y={pointerPosition.y - 30} 
-        //style={{background: 'white'}}
-        //fill="white"
-        filter="url(#solid)"
+        <text
+          x={data.x}
+          y={data.y - 30}
+          //style={{background: 'white'}}
+          //fill="white"
+          filter="url(#solid)"
           textAnchor="middle"
           stroke="black"
           strokeWidth="1px"
           alignmentBaseline="middle"
-          > {pointerPosition.y < y(height - 300) ? pointerPosition.y : - pointerPosition.y} / {
-            parseFloat(
-              Math.atan2(Math.abs(pointerPosition.y - ( height - 245)), Math.abs(pointerPosition.x - (marginLeft + 400))) * 180/ Math.PI
-              ).toFixed(2)
-        }
-          </text>
+        >
+          {" "}
+          {pointerPosition.y < y(height - 300) ? data.y : -data.y} /{" "}
+          {parseFloat(
+            (Math.atan2(
+              Math.abs(data.y - (height - 245)),
+              Math.abs(data.x - (marginLeft + 400))
+            ) *
+              180) /
+              Math.PI
+          ).toFixed(2)}
+        </text>
 
         <circle
-          cx={pointerPosition.x}
-          cy={pointerPosition.y}
+          cx={data.x}
+          cy={data.y}
           r={10} // Adjust the radius of the pointer
           fill="red" // Change the fill color to your liking
         />
