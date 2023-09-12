@@ -22,6 +22,16 @@ const App = ({
     y: height - 140,
   });
 
+  const y = d3
+    .scaleLinear()
+    .domain([0, 100])
+    .range([height - marginBottom, marginTop]);
+
+  const [pointerPositionAtc, setPointerPositionAtc] = useState({
+    x: marginLeft,
+    y: y(height - 339),
+  });
+
   const x = d3
     .scaleLinear()
     .domain([0, 1000])
@@ -30,23 +40,32 @@ const App = ({
   useEffect(() => {
     const interval = setInterval(() => {
       setPointerPosition((prevMarker) => {
-        const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10;
+        const newX1 =
+          prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
         let return_data = { y: prevMarker.y, x: newX1 };
+        let return_data_atc = { y: pointerPositionAtc.y, x: newX1 };
+        setPointerPositionAtc(return_data_atc);
         return return_data;
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [setPointerPosition]);
-
-  console.log("pointerPosition ----- ", pointerPosition);
+  }, [setPointerPosition, setPointerPositionAtc, pointerPositionAtc]);
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
       {/* <LinePlot data={marker1stItem} data2={marker2ndItem} /> */}
 
-      <RhythmChart data={marker1stItem} accessControlStatus={true} />
+      <RhythmChart
+        data={pointerPosition}
+        accessControlStatus={true}
+        updateState={(e) => setPointerPosition(e)}
+      />
 
-      <ATCChart data={marker1stItem} accessControlStatus={true} />
+      <ATCChart
+        data={pointerPositionAtc}
+        accessControlStatus={true}
+        updateState={(e) => setPointerPositionAtc(e)}
+      />
       {/* <LineBox
         redValue={redLine1stPanel}
         greenValue={green1stPanel}
