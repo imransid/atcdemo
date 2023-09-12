@@ -66,7 +66,7 @@ export default function ATCChart({
       },
     };
 
-    socket.emit("messageSendToUser", emitPayload, async (status) => {
+    socket.emit("ATC", emitPayload, async (status) => {
       console.log("Message sent : " + status);
     });
   };
@@ -74,13 +74,13 @@ export default function ATCChart({
   useEffect(() => {
     const interval = setInterval(() => {
       setPointerPosition((prevMarker) => {
-        const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10 ;
+        const newX1 = prevMarker.x > (width - marginRight) ? 0 : prevMarker.x + 10 ;
         console.log('x(0)',x(0))
         console.log('x(10)',x(10))
         console.log('x(1000)',x(1000))
 
         let return_data = { y: prevMarker.y, x: newX1 };
-        //sendRhythmEvent(return_data);
+        sendRhythmEvent(return_data);
         return return_data;
       });
     }, 1000);
@@ -382,7 +382,7 @@ export default function ATCChart({
           cx={pointerPosition.x}
           cy={pointerPosition.y}
           r={10} // Adjust the radius of the pointer
-          fill="red" // Change the fill color to your liking
+          fill="green" // Change the fill color to your liking
         />
       </svg>
     </div>

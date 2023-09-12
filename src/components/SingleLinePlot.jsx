@@ -38,17 +38,18 @@ const SingleLinePlot = ({
   const curve1 = [
     [marginLeft + 200, height - 300],
     [marginLeft + 900, height - 270],
-    [width - marginRight, height - marginBottom],
+    [width - marginRight, height - marginBottom -50],
   ];
   const curve2 = [
     [marginLeft, height - 250],
+    [marginLeft + 400, height - 245],
     [marginLeft + 900, height - 220],
-    [width - marginRight, height - marginBottom],
+    [width - marginRight, height - marginBottom - 50],
   ];
   const curve3 = [
     [marginLeft + 200, height - 200],
     [marginLeft + 900, height - 170],
-    [width - marginRight, height - marginBottom],
+    [width - marginRight, height - marginBottom - 50],
   ];
 
   const curve4 = [
@@ -155,6 +156,7 @@ const SingleLinePlot = ({
       <g transform={`translate(${marginLeft},0)`} />
       <g fill="white" stroke="currentColor" strokeWidth="1.5">
         { status === "ATC" &&<line color='grey'  x1={marginLeft} y1={marginTop} x2={width - marginRight} y2={marginTop}/>}
+        { status !== "ATC" && <line color="yellow" x1={marginLeft} x2={marginLeft + 400} y1={height - 182.6} y2={height - 245}/>}
         <line
           color="grey"
           x1={marginLeft}
@@ -330,7 +332,7 @@ const SingleLinePlot = ({
         d={line(status === "ATC" ? curve5 : curve2)}
       />
 
-      {data.length > 0 && (
+      {/* {data.length > 0 && (
         <text
           x={width - marginRight - 80} // Adjust the X-coordinate to align with the top-right corner
           y={marginTop + 10} // Adjust the Y-coordinate to align with the top margin
@@ -352,7 +354,7 @@ const SingleLinePlot = ({
         >
           {getValueLastObject(data2).x}-{getValueLastObject(data2).y}
         </text>
-      )}
+      )} */}
 
       <GetKeyIcon />
 
@@ -364,12 +366,63 @@ const SingleLinePlot = ({
         d={line(status === "ATC" ? curve6 : curve3)}
       />
 
-      <path
+
+        <defs>
+            <filter x="0" y="0" width="1" height="1" id="solid">
+              <feFlood floodColor="white" result="bg" />
+              <feMerge>
+                <feMergeNode in="bg"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+        </defs>
+
+       { (data.length > 0 || data2.length> 0)  && <text x={status === "ATC" ? data2[data2.length-1]?.x: data[data.length-1]?.x} 
+        y={ status === "ATC" ? data2[data2.length-1]?.y - 30 : data[data.length-1]?.y - 30} 
+        //style={{background: 'white'}}
+        //fill="white"
+        filter="url(#solid)"
+          textAnchor="middle"
+          stroke="black"
+          strokeWidth="1px"
+          alignmentBaseline="middle"
+          > 
+          {(status === "ATC" ? data2[data2.length-1].y : data[data.length-1].y) < y(height - 300) ? (status === "ATC" ? data2[data2.length-1].y : data[data.length-1].y) : - (status === "ATC" ? data2[data2.length-1].y : data[data.length-1].y)} / {
+            parseFloat(
+              Math.atan2(Math.abs((status === "ATC" ? data2[data2.length-1].y : data[data.length-1].y) - ( height - 245)), Math.abs((status === "ATC" ? data2[data2.length-1].x : data[data.length-1].x) - (marginLeft + 400))) * 180/ Math.PI
+              ).toFixed(2)
+          } 
+          </text> }
+
+          { (data.length > 0 || data2.length> 0)  && <text x={status === "ATC" ? data2[data2.length-1]?.x: data[data.length-1]?.x} 
+        y={ status === "ATC" ? data2[data2.length-1]?.y : data[data.length-1]?.y} 
+        //style={{background: 'white'}}
+        //fill="white"
+        filter="url(#solid)"
+          textAnchor="middle"
+          stroke="black"
+          strokeWidth="1px"
+          alignmentBaseline="middle"
+          > 
+          X
+          </text> }
+
+          <g fill="none" stroke="grey" strokeWidth="2.5">
+          { status === "ATC" ? data2.map((d, i) => (
+              <circle key={i} cx={d.x} cy={d.y} r="1" />
+            )) : data.map((d, i) => (
+              <circle key={i} cx={d.x} cy={d.y} r="1" />
+            )) }
+           
+      </g>
+
+      {/* <path
         fill="none"
-        stroke="steelblue"
+        stroke="grey"
         strokeWidth="1.5"
+        style={{strokeDasharray: "6,6"}}
         d={baseGraphExtra(status === "ATC" ? data2 : data)}
-      />
+      /> */}
     </svg>
   );
 };

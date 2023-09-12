@@ -95,7 +95,7 @@ export default function RhythmChart({
       // console.log(x, y); 
 
       setPointerPosition((prevMarker) => {
-        const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10;
+        const newX1 = prevMarker.x > (width - marginRight) ? 0 : prevMarker.x + 10;
         console.log('setPointerPosition',x(newX1))
 
         let return_data = { y: prevMarker.y, x: newX1 };
@@ -103,7 +103,7 @@ export default function RhythmChart({
         // console.log('y', return_data.y,'x', return_data.x)
         // console.log('Angle in radian', 3 * Math.PI / 180 )
         //debugger;
-        //sendRhythmEvent(return_data);
+        sendRhythmEvent(return_data);
         return return_data;
       });
     }, 1000);
@@ -144,6 +144,7 @@ export default function RhythmChart({
               break;
             case "ArrowDown":
               updatedPosition.y = updatedPosition.y + step;
+              updatedPosition.x = updatedPosition.x + step;
               setKeyStatus("down");
               break;
             default:
@@ -431,7 +432,7 @@ export default function RhythmChart({
           cx={pointerPosition.x}
           cy={pointerPosition.y}
           r={10} // Adjust the radius of the pointer
-          fill="red" // Change the fill color to your liking
+          fill="green" // Change the fill color to your liking
         />
       </svg>
     </div>
