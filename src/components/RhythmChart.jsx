@@ -85,11 +85,25 @@ export default function RhythmChart({
               const y = cy + r * Math.sin(angleRadians);
               console.log('y for 3 degree', y)
     const interval = setInterval(() => {
+      // const cx = marginLeft + 900
+      // const cy = height - 250
+      // const r =50
+      // const angleDegrees = 3
+      // const angleRadians = angleDegrees * Math.PI / 180;
+      // const x = cx + r * Math.cos(angleRadians);
+      // const y = cy + r * Math.sin(angleRadians);
+      // console.log(x, y); 
 
       setPointerPosition((prevMarker) => {
         const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10;
         console.log('setPointerPosition',x(newX1))
+
         let return_data = { y: prevMarker.y, x: newX1 };
+        // console.log('Angle', Math.atan2(return_data.y, return_data.x) * 180/ Math.PI )
+        // console.log('y', return_data.y,'x', return_data.x)
+        // console.log('Angle in radian', 3 * Math.PI / 180 )
+        //debugger;
+        //sendRhythmEvent(return_data);
         return return_data;
       });
     }, 1000);
