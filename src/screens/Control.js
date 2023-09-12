@@ -22,6 +22,16 @@ const App = ({
     y: height - 140,
   });
 
+  const y = d3
+    .scaleLinear()
+    .domain([0, 100])
+    .range([height - marginBottom, marginTop]);
+
+  const [pointerPositionAtc, setPointerPositionAtc] = useState({
+    x: marginLeft,
+    y: y(height - 339),
+  });
+
   const x = d3
     .scaleLinear()
     .domain([0, 1000])
@@ -32,11 +42,19 @@ const App = ({
       setPointerPosition((prevMarker) => {
         const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10;
         let return_data = { y: prevMarker.y, x: newX1 };
+        let return_data_atc = { y: pointerPositionAtc.y, x: newX1 };
+        setPointerPositionAtc(return_data_atc);
         return return_data;
       });
+
+      // setPointerPositionAtc((prevMarker) => {
+      //   const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10;
+      //   let return_data = { y: prevMarker.y, x: newX1 };
+      //   return return_data;
+      // });
     }, 1000);
     return () => clearInterval(interval);
-  }, [setPointerPosition]);
+  }, [setPointerPosition, setPointerPositionAtc, pointerPositionAtc]);
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
@@ -48,7 +66,11 @@ const App = ({
         updateState={(e) => setPointerPosition(e)}
       />
 
-      <ATCChart data={marker1stItem} accessControlStatus={true} />
+      <ATCChart
+        data={pointerPositionAtc}
+        accessControlStatus={true}
+        updateState={(e) => setPointerPositionAtc(e)}
+      />
       {/* <LineBox
         redValue={redLine1stPanel}
         greenValue={green1stPanel}

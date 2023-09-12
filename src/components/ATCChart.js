@@ -15,23 +15,24 @@ export default function ATCChart({
   marginBottom = 30,
   marginLeft = 60,
   accessControlStatus,
+  updateState,
 }) {
   const gx = useRef();
 
   const curve1 = [
     [marginLeft + 200, height - 140],
     [marginLeft + 900, height - 170],
-    [width - marginRight, marginTop +100],
+    [width - marginRight, marginTop + 100],
   ];
   const curve2 = [
     [marginLeft, height - 220],
     [marginLeft + 900, height - 220],
-    [width - marginRight, marginTop+100],
+    [width - marginRight, marginTop + 100],
   ];
   const curve3 = [
     [marginLeft + 200, height - 250],
     [marginLeft + 900, height - 270],
-    [width - marginRight, marginTop+100],
+    [width - marginRight, marginTop + 100],
   ];
 
   const x = d3
@@ -71,21 +72,18 @@ export default function ATCChart({
     });
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPointerPosition((prevMarker) => {
-        const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10 ;
-        console.log('x(0)',x(0))
-        console.log('x(10)',x(10))
-        console.log('x(1000)',x(1000))
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setPointerPosition((prevMarker) => {
+  //       const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10;
 
-        let return_data = { y: prevMarker.y, x: newX1 };
-        //sendRhythmEvent(return_data);
-        return return_data;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [setPointerPosition, sendRhythmEvent]);
+  //       let return_data = { y: prevMarker.y, x: newX1 };
+  //       //sendRhythmEvent(return_data);
+  //       return return_data;
+  //     });
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, [setPointerPosition, sendRhythmEvent]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -95,7 +93,7 @@ export default function ATCChart({
 
         if (accessControlStatus) {
           //   updatedPosition = { ...marker1stItem };
-          updatedPosition = { ...pointerPosition };
+          updatedPosition = { ...data };
           switch (event.key) {
             case "ArrowLeft":
               updatedPosition.y = updatedPosition.y - step;
@@ -109,8 +107,8 @@ export default function ATCChart({
               return;
           }
         }
-
-        setPointerPosition(updatedPosition);
+        updateState(updatedPosition);
+        // setPointerPosition(updatedPosition);
         sendRhythmEvent(updatedPosition);
       }
     };
@@ -126,6 +124,8 @@ export default function ATCChart({
     pointerPosition,
     sendRhythmEvent,
     setKeyStatus,
+    updateState,
+    data,
   ]);
 
   const colorChecker = (val) => {
@@ -157,7 +157,13 @@ export default function ATCChart({
         /> */}
         <g transform={`translate(${marginLeft},0)`} />
         <g fill="white" stroke="currentColor" strokeWidth="1.5">
-          <line color='grey'  x1={marginLeft} y1={marginTop} x2={width - marginRight} y2={marginTop}/>
+          <line
+            color="grey"
+            x1={marginLeft}
+            y1={marginTop}
+            x2={width - marginRight}
+            y2={marginTop}
+          />
           <line
             color="grey"
             x1={marginLeft}
@@ -332,16 +338,6 @@ export default function ATCChart({
           strokeWidth="1.5"
           d={line(curve2)}
         />
-{/* 
-        <text
-          x={width - marginRight - 80} // Adjust the X-coordinate to align with the top-right corner
-          y={marginTop + 10} // Adjust the Y-coordinate to align with the top margin
-          fill={colorChecker(pointerPosition.y)} //"white" // Text color
-          fontSize="16" // Font size
-          fontWeight="bold" // Font weight
-        >
-          {pointerPosition.x}-{pointerPosition.y}
-        </text> */}
 
         <GetKeyIcon />
 
@@ -353,34 +349,42 @@ export default function ATCChart({
           d={line(curve3)}
         />
 
-<defs>
-            <filter x="0" y="0" width="1" height="1" id="solid">
-              <feFlood floodColor="white" result="bg" />
-              <feMerge>
-                <feMergeNode in="bg"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
+        <defs>
+          <filter x="0" y="0" width="1" height="1" id="solid">
+            <feFlood floodColor="white" result="bg" />
+            <feMerge>
+              <feMergeNode in="bg" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
 
-<text x={pointerPosition.x} y={pointerPosition.y - 30} 
-        //style={{background: 'white'}}
-        //fill="white"
-        filter="url(#solid)"
+        <text
+          x={data.x}
+          y={data.y - 30}
+          //style={{background: 'white'}}
+          //fill="white"
+          filter="url(#solid)"
           textAnchor="middle"
           stroke="black"
           strokeWidth="1px"
           alignmentBaseline="middle"
-          > {pointerPosition.y < y(height - 300) ? pointerPosition.y : - pointerPosition.y} / {
-              parseFloat(
-                Math.atan2(Math.abs(pointerPosition.y - (height - 220)), Math.abs(pointerPosition.x - (marginLeft + 900))) * 180/ Math.PI
-                ).toFixed(2)
-          }
-          </text>
+        >
+          {" "}
+          {data.y < y(height - 300) ? data.y : -data.y} /{" "}
+          {parseFloat(
+            (Math.atan2(
+              Math.abs(data.y - (height - 220)),
+              Math.abs(data.x - (marginLeft + 900))
+            ) *
+              180) /
+              Math.PI
+          ).toFixed(2)}
+        </text>
 
         <circle
-          cx={pointerPosition.x}
-          cy={pointerPosition.y}
+          cx={data.x}
+          cy={data.y}
           r={10} // Adjust the radius of the pointer
           fill="red" // Change the fill color to your liking
         />
