@@ -40,18 +40,13 @@ const App = ({
   useEffect(() => {
     const interval = setInterval(() => {
       setPointerPosition((prevMarker) => {
-        const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10;
+        const newX1 =
+          prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
         let return_data = { y: prevMarker.y, x: newX1 };
         let return_data_atc = { y: pointerPositionAtc.y, x: newX1 };
         setPointerPositionAtc(return_data_atc);
         return return_data;
       });
-
-      // setPointerPositionAtc((prevMarker) => {
-      //   const newX1 = prevMarker.x > x(697.5) ? 0 : prevMarker.x + 10;
-      //   let return_data = { y: prevMarker.y, x: newX1 };
-      //   return return_data;
-      // });
     }, 1000);
     return () => clearInterval(interval);
   }, [setPointerPosition, setPointerPositionAtc, pointerPositionAtc]);
