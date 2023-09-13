@@ -409,9 +409,9 @@ const SingleLinePlot = ({
 
           <g fill="none" stroke="grey" strokeWidth="2.5">
           { status === "ATC" ? data2.map((d, i) => (
-              <circle key={i} cx={d.x} cy={d.y} r="1" />
+              <circle key={i} cx={d.x} cy={d.y} r="0.2" />
             )) : data.map((d, i) => (
-              <circle key={i} cx={d.x} cy={d.y} r="1" />
+              <circle key={i} cx={d.x} cy={d.y} r="0.2" />
             )) }
            
       </g>
