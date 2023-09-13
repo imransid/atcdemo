@@ -407,6 +407,20 @@ const SingleLinePlot = ({
           X
           </text> }
 
+         { status !== "ATC" && data.length > 0 && <text x={data[data.length-1]?.x} y={height-15} 
+        //style={{background: 'white'}}
+        //fill="white"
+     
+          filter="url(#solid)"
+          textAnchor="middle"
+          stroke="black"
+          strokeWidth="1px"
+          alignmentBaseline="middle"
+          > THAI321<br/>
+            
+
+          </text>}
+
           <g fill="none" stroke="grey" strokeWidth="2.5">
           { status === "ATC" ? data2.map((d, i) => (
               <circle key={i} cx={d.x} cy={d.y} r="0.2" />

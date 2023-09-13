@@ -75,9 +75,9 @@ export default function ATCChart({
     const interval = setInterval(() => {
       setPointerPosition((prevMarker) => {
         const newX1 = prevMarker.x > (width - marginRight) ? 0 : prevMarker.x + 10 ;
-        console.log('x(0)',x(0))
-        console.log('x(10)',x(10))
-        console.log('x(1000)',x(1000))
+        //console.log('x(0)',x(0))
+        //console.log('x(10)',x(10))
+        //console.log('x(1000)',x(1000))
 
         let return_data = { y: prevMarker.y, x: newX1 };
         sendRhythmEvent(return_data);
@@ -99,10 +99,12 @@ export default function ATCChart({
           switch (event.key) {
             case "ArrowLeft":
               updatedPosition.y = updatedPosition.y - step;
+              updatedPosition.x = updatedPosition.x + step;
               setKeyStatus("left");
               break;
             case "ArrowRight":
               updatedPosition.y = updatedPosition.y + step;
+              updatedPosition.x = updatedPosition.x + step;
               setKeyStatus("right");
               break;
             default:
@@ -128,9 +130,9 @@ export default function ATCChart({
     setKeyStatus,
   ]);
 
-  const colorChecker = (val) => {
-    return val < 200 ? "green" : "red";
-  };
+  // const colorChecker = (val) => {
+  //   return val < 200 ? "green" : "red";
+  // };
 
   useEffect(
     () => void d3.select(gx.current).call(d3.axisBottom(x).tickSize(0)),
@@ -332,7 +334,7 @@ export default function ATCChart({
           strokeWidth="1.5"
           d={line(curve2)}
         />
-{/* 
+        {/* 
         <text
           x={width - marginRight - 80} // Adjust the X-coordinate to align with the top-right corner
           y={marginTop + 10} // Adjust the Y-coordinate to align with the top margin
@@ -353,7 +355,7 @@ export default function ATCChart({
           d={line(curve3)}
         />
 
-<defs>
+        <defs>
             <filter x="0" y="0" width="1" height="1" id="solid">
               <feFlood floodColor="white" result="bg" />
               <feMerge>
@@ -363,7 +365,7 @@ export default function ATCChart({
             </filter>
         </defs>
 
-<text x={pointerPosition.x} y={pointerPosition.y - 30} 
+        <text x={pointerPosition.x} y={pointerPosition.y - 30} 
         //style={{background: 'white'}}
         //fill="white"
         filter="url(#solid)"
@@ -377,6 +379,8 @@ export default function ATCChart({
                 ).toFixed(2)
           }
           </text>
+
+         
 
         <circle
           cx={pointerPosition.x}

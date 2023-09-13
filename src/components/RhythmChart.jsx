@@ -77,15 +77,14 @@ export default function RhythmChart({
   };
 
   useEffect(() => {
-    const cy = height - 220
-              const r =50
+    //const cy = height - 220
+              //const r =50
               // const angleDegrees = Math.atan2(updatedPosition.y, updatedPosition.x ) * Math.PI / 180
-            const angleRadians = 3 * Math.PI / 180;
+            //const angleRadians = 3 * Math.PI / 180;
               // const x = cx + r * Math.cos(angleRadians);
-              const y = cy + r * Math.sin(angleRadians);
-              console.log('y for 3 degree', y)
-    const interval = setInterval(() => {
-      // const cx = marginLeft + 900
+              //const y = cy + r * Math.sin(angleRadians);
+              //console.log('y for 3 degree', y)
+               // const cx = marginLeft + 900
       // const cy = height - 250
       // const r =50
       // const angleDegrees = 3
@@ -93,16 +92,13 @@ export default function RhythmChart({
       // const x = cx + r * Math.cos(angleRadians);
       // const y = cy + r * Math.sin(angleRadians);
       // console.log(x, y); 
+    const interval = setInterval(() => {
+     
 
       setPointerPosition((prevMarker) => {
         const newX1 = prevMarker.x > (width - marginRight) ? 0 : prevMarker.x + 10;
-        console.log('setPointerPosition',x(newX1))
-
+        //console.log('setPointerPosition',x(newX1))
         let return_data = { y: prevMarker.y, x: newX1 };
-        // console.log('Angle', Math.atan2(return_data.y, return_data.x) * 180/ Math.PI )
-        // console.log('y', return_data.y,'x', return_data.x)
-        // console.log('Angle in radian', 3 * Math.PI / 180 )
-        //debugger;
         sendRhythmEvent(return_data);
         return return_data;
       });
@@ -125,7 +121,7 @@ export default function RhythmChart({
               updatedPosition.x = updatedPosition.x + step;
 
               const angleDegrees = Math.atan2(Math.abs(updatedPosition.y - (height - 220)), Math.abs(updatedPosition.x  - (marginLeft + 900))) * 180/ Math.PI
-              console.log("angleDegrees",angleDegrees); 
+              //console.log("angleDegrees",angleDegrees); 
               //marginLeft + 900, height - 220
               // const cx = marginLeft + 900
               const cy = height - 220
@@ -134,7 +130,7 @@ export default function RhythmChart({
             const angleRadians = 3 * Math.PI / 180;
               // const x = cx + r * Math.cos(angleRadians);
               const y = cy + r * Math.sin(angleRadians);
-            console.log("arrow up",x, y); 
+            //console.log("arrow up",x, y); 
 
               //updatedPosition.y = y 
 
@@ -170,9 +166,9 @@ export default function RhythmChart({
     setKeyStatus,
   ]);
 
-  const colorChecker = (val) => {
-    return val < 200 ? "green" : "red";
-  };
+  // const colorChecker = (val) => {
+  //   return val < 200 ? "green" : "red";
+  // };
 
   useEffect(
     () => void d3.select(gx.current).call(d3.axisBottom(x).tickSize(0)),
@@ -426,6 +422,19 @@ export default function RhythmChart({
               Math.atan2(Math.abs(pointerPosition.y - ( height - 245)), Math.abs(pointerPosition.x - (marginLeft + 400))) * 180/ Math.PI
               ).toFixed(2)
         }
+          </text>
+          <text x={pointerPosition.x} y={height-15} 
+        //style={{background: 'white'}}
+        //fill="white"
+     
+          filter="url(#solid)"
+          textAnchor="middle"
+          stroke="black"
+          strokeWidth="1px"
+          alignmentBaseline="middle"
+          > THAI321<br/>
+            
+
           </text>
 
         <circle
