@@ -1,45 +1,69 @@
-
-
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import RhythmChart from "../components/RhythmChart";
 import ATCChart from "../components/ATCChart";
+import * as d3 from "d3";
 
 const SOCKET_SERVER_URL = "ws://172.30.22.236:3000";
 const socket = io(SOCKET_SERVER_URL);
 
-const App = () => {
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  // const [fooEvents, setFooEvents] = useState([]);
+const App = ({
+  width = window.innerWidth,
+  height = 400,
+  marginTop = 10,
+  marginRight = 30,
+  marginBottom = 30,
+  marginLeft = 60,
+}) => {
+  const [pointerPosition, setPointerPosition] = useState({
+    x: marginLeft,
+    y: height - 140,
+  });
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const y = d3
+    .scaleLinear()
+    .domain([0, 100])
+    .range([height - marginBottom, marginTop]);
+
+  const [pointerPositionAtc, setPointerPositionAtc] = useState({
+    x: marginLeft,
+    y: y(height - 339),
+  });
+
+  const x = d3
+    .scaleLinear()
+    .domain([0, 1000])
+    .range([marginLeft, width - marginRight]);
 
   useEffect(() => {
-    // Function to update window width when the window is resized
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    // Add event listener for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener when the component is unmounted
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const [marker1stItem, setMarker1stItem] = useState([]);
-
-  const [marker2ndItem, setMarker2ndItem] = useState([]);
+    const interval = setInterval(() => {
+      setPointerPosition((prevMarker) => {
+        const newX1 =
+          prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
+        let return_data = { y: prevMarker.y, x: newX1 };
+        let return_data_atc = { y: pointerPositionAtc.y, x: newX1 };
+        setPointerPositionAtc(return_data_atc);
+        return return_data;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [setPointerPosition, setPointerPositionAtc, pointerPositionAtc]);
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
       {/* <LinePlot data={marker1stItem} data2={marker2ndItem} /> */}
 
-      <RhythmChart data={marker1stItem} accessControlStatus={true} />
+      <RhythmChart
+        data={pointerPosition}
+        accessControlStatus={true}
+        updateState={(e) => setPointerPosition(e)}
+      />
 
-      <ATCChart data={marker1stItem} accessControlStatus={true} />
+      <ATCChart
+        data={pointerPositionAtc}
+        accessControlStatus={true}
+        updateState={(e) => setPointerPositionAtc(e)}
+      />
       {/* <LineBox
         redValue={redLine1stPanel}
         greenValue={green1stPanel}
