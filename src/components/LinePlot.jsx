@@ -34,8 +34,8 @@ export default function LinePlot({
     function onRhythmEventConnect(value) {
       console.log(value);
       if (value && value.flightInfo) {
-        const { top, left, speed } = value.flightInfo;
-        const newData = { x: top, y: left };
+        const { top, left, speed, airCraftSpeed } = value.flightInfo;
+        const newData = { x: top, y: left , airCraftSpeed};
 
         setIconStatusRhythm(speed);
 
@@ -51,8 +51,8 @@ export default function LinePlot({
     let marker2Item = marker2ndItem;
     function onAtcEventConnect(value) {
       if (value && value?.flightInfo) {
-        const { top, left, speed } = value.flightInfo;
-        const newData = { x: top, y: left };
+        const { top, left, speed , airCraftSpeed} = value.flightInfo;
+        const newData = { x: top, y: left, airCraftSpeed };
         setIconStatusAtc(speed);
         if (top === 0) {
           marker2Item = [];

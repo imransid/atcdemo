@@ -63,6 +63,7 @@ export default function ATCChart({
         left: data.y,
         right: 75.0,
         down: 10.0,
+        airCraftSpeed: 200,
         speed: keyStatus === "" ? -1 : keyStatus === "left" ? 0 : 1,
       },
     };
@@ -72,22 +73,22 @@ export default function ATCChart({
     });
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPointerPosition((prevMarker) => {
-        const newX1 =
-          prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
-        //console.log('x(0)',x(0))
-        //console.log('x(10)',x(10))
-        //console.log('x(1000)',x(1000))
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setPointerPosition((prevMarker) => {
+  //       const newX1 =
+  //         prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
+  //       //console.log('x(0)',x(0))
+  //       //console.log('x(10)',x(10))
+  //       //console.log('x(1000)',x(1000))
 
-        let return_data = { y: prevMarker.y, x: newX1 };
-        sendRhythmEvent(return_data);
-        return return_data;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [setPointerPosition, sendRhythmEvent]);
+  //       let return_data = { y: prevMarker.y, x: newX1 };
+  //       sendRhythmEvent(return_data);
+  //       return return_data;
+  //     });
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, [setPointerPosition, sendRhythmEvent]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -379,7 +380,7 @@ export default function ATCChart({
           alignmentBaseline="middle"
         >
           {" "}
-          {data.y < y(height - 300) ? data.y : -data.y} /{" "}
+          {data.airCraftSpeed} /{" "}
           {parseFloat(
             (Math.atan2(
               Math.abs(data.y - (height - 220)),

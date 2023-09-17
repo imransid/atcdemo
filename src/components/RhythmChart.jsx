@@ -67,7 +67,7 @@ export default function RhythmChart({
         left: data.y,
         right: 75.0,
         down: 10.0,
-        speed: 10,
+        airCraftSpeed: 200,
         speed: keyStatus === "" ? -1 : keyStatus === "up" ? 2 : 3,
       },
     };
@@ -77,34 +77,34 @@ export default function RhythmChart({
     });
   };
 
-  useEffect(() => {
-    //const cy = height - 220
-    //const r =50
-    // const angleDegrees = Math.atan2(updatedPosition.y, updatedPosition.x ) * Math.PI / 180
-    //const angleRadians = 3 * Math.PI / 180;
-    // const x = cx + r * Math.cos(angleRadians);
-    //const y = cy + r * Math.sin(angleRadians);
-    //console.log('y for 3 degree', y)
-    // const cx = marginLeft + 900
-    // const cy = height - 250
-    // const r =50
-    // const angleDegrees = 3
-    // const angleRadians = angleDegrees * Math.PI / 180;
-    // const x = cx + r * Math.cos(angleRadians);
-    // const y = cy + r * Math.sin(angleRadians);
-    // console.log(x, y);
-    const interval = setInterval(() => {
-      setPointerPosition((prevMarker) => {
-        const newX1 =
-          prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
-        //console.log('setPointerPosition',x(newX1))
-        let return_data = { y: prevMarker.y, x: newX1 };
-        sendRhythmEvent(return_data);
-        return return_data;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [setPointerPosition, sendRhythmEvent]);
+  // useEffect(() => {
+  //   //const cy = height - 220
+  //   //const r =50
+  //   // const angleDegrees = Math.atan2(updatedPosition.y, updatedPosition.x ) * Math.PI / 180
+  //   //const angleRadians = 3 * Math.PI / 180;
+  //   // const x = cx + r * Math.cos(angleRadians);
+  //   //const y = cy + r * Math.sin(angleRadians);
+  //   //console.log('y for 3 degree', y)
+  //   // const cx = marginLeft + 900
+  //   // const cy = height - 250
+  //   // const r =50
+  //   // const angleDegrees = 3
+  //   // const angleRadians = angleDegrees * Math.PI / 180;
+  //   // const x = cx + r * Math.cos(angleRadians);
+  //   // const y = cy + r * Math.sin(angleRadians);
+  //   // console.log(x, y);
+  //   const interval = setInterval(() => {
+  //     setPointerPosition((prevMarker) => {
+  //       const newX1 =
+  //         prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
+  //       //console.log('setPointerPosition',x(newX1))
+  //       let return_data = { y: prevMarker.y, x: newX1 };
+  //       sendRhythmEvent(return_data);
+  //       return return_data;
+  //     });
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, [setPointerPosition, sendRhythmEvent]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -421,7 +421,7 @@ export default function RhythmChart({
           alignmentBaseline="middle"
         >
           {" "}
-          {pointerPosition.y < y(height - 300) ? data.y : -data.y} /{" "}
+          {data.airCraftSpeed} /{" "}
           {parseFloat(
             (Math.atan2(
               Math.abs(data.y - (height - 245)),

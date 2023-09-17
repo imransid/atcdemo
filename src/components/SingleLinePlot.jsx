@@ -85,16 +85,16 @@ const SingleLinePlot = ({
     ])
     .range([height - marginBottom, marginTop]);
 
-  const y_y = d3.scaleLinear().domain([0, 1000]).range([0, 1000]);
-  const x_x = d3.scaleLinear().domain([0, 1000]).range([0, 1000]);
+ // const y_y = d3.scaleLinear().domain([0, 1000]).range([0, 1000]);
+  //const x_x = d3.scaleLinear().domain([0, 1000]).range([0, 1000]);
 
   const baseGraphExtra = d3
     .line()
     .x(function (d) {
-      return x_x(d.x);
+      return d.x;
     })
     .y(function (d) {
-      return y_y(d.y);
+      return d.y;
     });
 
   const y1 = d3
@@ -387,7 +387,7 @@ const SingleLinePlot = ({
           strokeWidth="1px"
           alignmentBaseline="middle"
           > 
-          {(status === "ATC" ? data2[data2.length-1].y : data[data.length-1].y) < y(height - 300) ? (status === "ATC" ? data2[data2.length-1].y : data[data.length-1].y) : - (status === "ATC" ? data2[data2.length-1].y : data[data.length-1].y)} / {
+          { status === "ATC" ? data2[data2.length - 1].airCraftSpeed : data[data.length - 1].airCraftSpeed } / {
             parseFloat(
               Math.atan2(Math.abs((status === "ATC" ? data2[data2.length-1].y : data[data.length-1].y) - ( height - 245)), Math.abs((status === "ATC" ? data2[data2.length-1].x : data[data.length-1].x) - (marginLeft + 400))) * 180/ Math.PI
               ).toFixed(2)
@@ -421,22 +421,22 @@ const SingleLinePlot = ({
 
           </text>}
 
-          <g fill="none" stroke="grey" strokeWidth="2.5">
+          {/*<g fill="none" stroke="grey">
           { status === "ATC" ? data2.map((d, i) => (
               <circle key={i} cx={d.x} cy={d.y} r="0.2" />
             )) : data.map((d, i) => (
               <circle key={i} cx={d.x} cy={d.y} r="0.2" />
             )) }
            
-      </g>
+          </g> */}
 
-      {/* <path
+       <path
         fill="none"
         stroke="grey"
         strokeWidth="1.5"
-        style={{strokeDasharray: "6,6"}}
+        strokeDasharray="3,3"
         d={baseGraphExtra(status === "ATC" ? data2 : data)}
-      /> */}
+      />  
     </svg>
   );
 };
