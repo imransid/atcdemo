@@ -36,19 +36,31 @@ const SingleLinePlot = ({
   };
 
   const curve1 = [
-    [marginLeft + 200, height - 300],
-    [marginLeft + 900, height - 270],
-    [width - marginRight, height - marginBottom -50],
+    [marginLeft + 200, height - 285],
+    [marginLeft + 400, height - 285],
+    [marginLeft + 800, height - 280],
+    [marginLeft + 1000, height - 275],
+    [marginLeft + 1200, height - 260],
+    [marginLeft + 1400, height - 200],
+    [width - marginRight, height - marginBottom - 50],
   ];
   const curve2 = [
     [marginLeft, height - 250],
+    [marginLeft + 200, height - 245],
     [marginLeft + 400, height - 245],
-    [marginLeft + 900, height - 220],
+    [marginLeft + 800, height - 240],
+    [marginLeft + 1000, height - 235],
+    [marginLeft + 1200, height - 220],
+    [marginLeft + 1400, height - 170],
     [width - marginRight, height - marginBottom - 50],
   ];
   const curve3 = [
-    [marginLeft + 200, height - 200],
-    [marginLeft + 900, height - 170],
+    [marginLeft + 200, height - 205],
+    [marginLeft + 400, height - 205],
+    [marginLeft + 800, height - 200],
+    [marginLeft + 1000, height - 195],
+    [marginLeft + 1200, height - 180],
+    [marginLeft + 1400, height - 140],
     [width - marginRight, height - marginBottom - 50],
   ];
 
@@ -156,6 +168,13 @@ const SingleLinePlot = ({
       <g transform={`translate(${marginLeft},0)`} />
       <g fill="white" stroke="currentColor" strokeWidth="1.5">
         { status === "ATC" &&<line color='grey'  x1={marginLeft} y1={marginTop} x2={width - marginRight} y2={marginTop}/>}
+        {status !== "ATC" &&  <line
+            color="grey"
+            x1={marginLeft}
+            y1={height - marginBottom - 50}
+            x2={width - marginRight}
+            y2={height - marginBottom - 50}
+          />}
         { status !== "ATC" && <line color="yellow" x1={marginLeft} x2={marginLeft + 400} y1={height - 182.6} y2={height - 245}/>}
         <line
           color="grey"

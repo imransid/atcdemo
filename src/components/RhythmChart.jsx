@@ -20,19 +20,31 @@ export default function RhythmChart({
   const gx = useRef();
 
   const curve1 = [
-    [marginLeft + 200, height - 300],
-    [marginLeft + 900, height - 270],
+    [marginLeft + 200, height - 285],
+    [marginLeft + 400, height - 285],
+    [marginLeft + 800, height - 280],
+    [marginLeft + 1000, height - 275],
+    [marginLeft + 1200, height - 260],
+    [marginLeft + 1400, height - 200],
     [width - marginRight, height - marginBottom - 50],
   ];
   const curve2 = [
     [marginLeft, height - 250],
+    [marginLeft + 200, height - 245],
     [marginLeft + 400, height - 245],
-    [marginLeft + 900, height - 220],
+    [marginLeft + 800, height - 240],
+    [marginLeft + 1000, height - 235],
+    [marginLeft + 1200, height - 220],
+    [marginLeft + 1400, height - 170],
     [width - marginRight, height - marginBottom - 50],
   ];
   const curve3 = [
-    [marginLeft + 200, height - 200],
-    [marginLeft + 900, height - 170],
+    [marginLeft + 200, height - 205],
+    [marginLeft + 400, height - 205],
+    [marginLeft + 800, height - 200],
+    [marginLeft + 1000, height - 195],
+    [marginLeft + 1200, height - 180],
+    [marginLeft + 1400, height - 140],
     [width - marginRight, height - marginBottom - 50],
   ];
 
@@ -370,7 +382,7 @@ export default function RhythmChart({
           stroke="currentColor"
           strokeWidth="1.5"
           d={line(curve1)}
-        />
+        /> 
         <path
           fill="none"
           color="grey"
@@ -391,13 +403,13 @@ export default function RhythmChart({
 
         <GetKeyIcon />
 
-        <path
+         <path
           fill="none"
           color="grey"
           stroke="currentColor"
           strokeWidth="1.5"
           d={line(curve3)}
-        />
+        /> 
 
         <defs>
           <filter x="0" y="0" width="1" height="1" id="solid">
