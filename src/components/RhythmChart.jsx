@@ -52,9 +52,7 @@ export default function RhythmChart({
     .scaleLinear()
     .domain([0, 1000])
     .range([marginLeft, width - marginRight]);
-  //console.log(x(marginLeft))
 
-  //const y = d3.scaleLinear().domain([0,d3.max(data, function(d){ return d.y})]).range([ (height - marginBottom), marginTop]);
 
   const y = d3
     .scaleLinear()
@@ -63,10 +61,6 @@ export default function RhythmChart({
 
   const line = d3.line().curve(d3.curveNatural);
 
-  const [pointerPosition, setPointerPosition] = useState({
-    x: marginLeft,
-    y: height - 140,
-  });
   const [keyStatus, setKeyStatus] = useState("");
 
   const sendRhythmEvent = async (data) => {
@@ -88,35 +82,6 @@ export default function RhythmChart({
       console.log("Message sent : " + status);
     });
   };
-
-  // useEffect(() => {
-  //   //const cy = height - 220
-  //   //const r =50
-  //   // const angleDegrees = Math.atan2(updatedPosition.y, updatedPosition.x ) * Math.PI / 180
-  //   //const angleRadians = 3 * Math.PI / 180;
-  //   // const x = cx + r * Math.cos(angleRadians);
-  //   //const y = cy + r * Math.sin(angleRadians);
-  //   //console.log('y for 3 degree', y)
-  //   // const cx = marginLeft + 900
-  //   // const cy = height - 250
-  //   // const r =50
-  //   // const angleDegrees = 3
-  //   // const angleRadians = angleDegrees * Math.PI / 180;
-  //   // const x = cx + r * Math.cos(angleRadians);
-  //   // const y = cy + r * Math.sin(angleRadians);
-  //   // console.log(x, y);
-  //   const interval = setInterval(() => {
-  //     setPointerPosition((prevMarker) => {
-  //       const newX1 =
-  //         prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
-  //       //console.log('setPointerPosition',x(newX1))
-  //       let return_data = { y: prevMarker.y, x: newX1 };
-  //       sendRhythmEvent(return_data);
-  //       return return_data;
-  //     });
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, [setPointerPosition, sendRhythmEvent]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -391,15 +356,6 @@ export default function RhythmChart({
           d={line(curve2)}
         />
 
-        {/* <text
-          x={width - marginRight - 80} // Adjust the X-coordinate to align with the top-right corner
-          y={marginTop + 10} // Adjust the Y-coordinate to align with the top margin
-          fill={colorChecker(pointerPosition.y)} //"white" // Text color
-          fontSize="16" // Font size
-          fontWeight="bold" // Font weight
-        >
-          {pointerPosition.x}-{pointerPosition.y}
-        </text> */}
 
         <GetKeyIcon />
 

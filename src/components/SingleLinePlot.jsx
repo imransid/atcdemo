@@ -20,8 +20,6 @@ const SingleLinePlot = ({
   iconStatus,
 }) => {
   const gx = useRef();
-  const gy = useRef();
-  const gx1 = useRef();
 
   const GetKeyIcon = () => {
     if (iconStatus === -1) return <></>;
@@ -64,23 +62,34 @@ const SingleLinePlot = ({
     [width - marginRight, height - marginBottom - 50],
   ];
 
-  const curve4 = [
-    [marginLeft + 200, height - 160],
-    [marginLeft + 900, height - 170],
-    [width - marginRight, marginTop],
+const curve4 = [
+    [marginLeft + 200, height - 130],
+    [marginLeft + 400, height - 130],
+    [marginLeft + 800, height - 135],
+    [marginLeft + 1000, height - 140],
+    [marginLeft + 1200, height - 145],
+    [marginLeft + 1400, height - 180],
+    [width - marginRight, marginTop + 70],
   ];
   const curve5 = [
-    [marginLeft, height - 220],
-    [marginLeft + 900, height - 220],
-    [width - marginRight, marginTop],
+    [marginLeft, height - 175],
+    [marginLeft + 200, height - 175],
+    [marginLeft + 400, height - 175],
+    [marginLeft + 800, height - 180],
+    [marginLeft + 1000, height - 185],
+    [marginLeft + 1200, height - 190],
+    [marginLeft + 1400, height - 225],
+    [width - marginRight, marginTop + 70],
   ];
   const curve6 = [
-    [marginLeft + 200, height - 250],
-    [marginLeft + 900, height - 270],
-    [width - marginRight, marginTop],
+    [marginLeft + 200, height - 220],
+    [marginLeft + 400, height - 220],
+    [marginLeft + 800, height - 225],
+    [marginLeft + 1000, height - 230],
+    [marginLeft + 1200, height - 235],
+    [marginLeft + 1400, height - 260],
+    [width - marginRight, marginTop + 70],
   ];
-  //const curve5 = [[marginLeft, height-250],[marginLeft+900, height-220],[width-marginRight, height - marginBottom]];
-  //const curve6 = [[marginLeft+200, height-200],[marginLeft+900, height-170],[width-marginRight, height - marginBottom]];
 
   const x = d3
     .scaleLinear()
@@ -127,36 +136,7 @@ const SingleLinePlot = ({
     [gx, x]
   );
 
-  const baseGraph = d3
-    .line()
-    .x(function (d) {
-      return x(d.x);
-    })
-    .y(function (d) {
-      return y(d.y);
-    });
 
-  const baseGraph2 = d3
-    .line()
-    .x(function (d) {
-      return x(d.x);
-    })
-    .y(function (d) {
-      return y1(d.y);
-    });
-
-  const getValueLastObject = (jsonArray) => {
-    const lastIndex = jsonArray.length - 1;
-    const lastObject = jsonArray[lastIndex];
-
-    return lastObject;
-  };
-
-  const getValueColor = (jsonArray) => {
-    const lastIndex = jsonArray.length - 1;
-    const lastObject = jsonArray[lastIndex];
-    return lastObject.y < 200 ? "green" : "red";
-  };
 
   return (
     <svg width={width} height={height} id="my-svg">
@@ -351,29 +331,7 @@ const SingleLinePlot = ({
         d={line(status === "ATC" ? curve5 : curve2)}
       />
 
-      {/* {data.length > 0 && (
-        <text
-          x={width - marginRight - 80} // Adjust the X-coordinate to align with the top-right corner
-          y={marginTop + 10} // Adjust the Y-coordinate to align with the top margin
-          fill={getValueColor(data)} // Text color
-          fontSize="16" // Font size
-          fontWeight="bold" // Font weight
-        >
-          {getValueLastObject(data).x}-{getValueLastObject(data).y}
-        </text>
-      )}
 
-      {data2.length > 0 && (
-        <text
-          x={width - marginRight - 80} // Adjust the X-coordinate to align with the top-right corner
-          y={marginTop + 10} // Adjust the Y-coordinate to align with the top margin
-          fill={getValueColor(data2)} // Text color
-          fontSize="16" // Font size
-          fontWeight="bold" // Font weight
-        >
-          {getValueLastObject(data2).x}-{getValueLastObject(data2).y}
-        </text>
-      )} */}
 
       <GetKeyIcon />
 
@@ -415,9 +373,7 @@ const SingleLinePlot = ({
 
           { (data.length > 0 || data2.length> 0)  && <text x={status === "ATC" ? data2[data2.length-1]?.x: data[data.length-1]?.x} 
         y={ status === "ATC" ? data2[data2.length-1]?.y : data[data.length-1]?.y} 
-        //style={{background: 'white'}}
-        //fill="white"
-        filter="url(#solid)"
+          filter="url(#solid)"
           textAnchor="middle"
           stroke="black"
           strokeWidth="1px"
@@ -427,8 +383,7 @@ const SingleLinePlot = ({
           </text> }
 
          { status !== "ATC" && data.length > 0 && <text x={data[data.length-1]?.x} y={height-15} 
-        //style={{background: 'white'}}
-        //fill="white"
+
      
           filter="url(#solid)"
           textAnchor="middle"

@@ -19,27 +19,40 @@ export default function ATCChart({
 }) {
   const gx = useRef();
 
+
   const curve1 = [
-    [marginLeft + 200, height - 140],
-    [marginLeft + 900, height - 170],
-    [width - marginRight, marginTop + 100],
+    [marginLeft + 200, height - 130],
+    [marginLeft + 400, height - 130],
+    [marginLeft + 800, height - 135],
+    [marginLeft + 1000, height - 140],
+    [marginLeft + 1200, height - 145],
+    [marginLeft + 1400, height - 180],
+    [width - marginRight, marginTop + 70],
   ];
   const curve2 = [
-    [marginLeft, height - 220],
-    [marginLeft + 900, height - 220],
-    [width - marginRight, marginTop + 100],
+    [marginLeft, height - 175],
+    [marginLeft + 200, height - 175],
+    [marginLeft + 400, height - 175],
+    [marginLeft + 800, height - 180],
+    [marginLeft + 1000, height - 185],
+    [marginLeft + 1200, height - 190],
+    [marginLeft + 1400, height - 225],
+    [width - marginRight, marginTop + 70],
   ];
   const curve3 = [
-    [marginLeft + 200, height - 250],
-    [marginLeft + 900, height - 270],
-    [width - marginRight, marginTop + 100],
+    [marginLeft + 200, height - 220],
+    [marginLeft + 400, height - 220],
+    [marginLeft + 800, height - 225],
+    [marginLeft + 1000, height - 230],
+    [marginLeft + 1200, height - 235],
+    [marginLeft + 1400, height - 260],
+    [width - marginRight, marginTop + 70],
   ];
 
   const x = d3
     .scaleLinear()
     .domain([0, 1000])
     .range([marginLeft, width - marginRight]);
-  //const y = d3.scaleLinear().domain([0,d3.max(data, function(d){ return d.y})]).range([ (height - marginBottom), marginTop]);
   const y = d3
     .scaleLinear()
     .domain([0, 100])
@@ -47,10 +60,6 @@ export default function ATCChart({
 
   const line = d3.line().curve(d3.curveNatural);
 
-  const [pointerPosition, setPointerPosition] = useState({
-    x: marginLeft,
-    y: y(height - 339),
-  });
   const [keyStatus, setKeyStatus] = useState("");
 
   const sendRhythmEvent = async (data) => {
@@ -73,22 +82,6 @@ export default function ATCChart({
     });
   };
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setPointerPosition((prevMarker) => {
-  //       const newX1 =
-  //         prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
-  //       //console.log('x(0)',x(0))
-  //       //console.log('x(10)',x(10))
-  //       //console.log('x(1000)',x(1000))
-
-  //       let return_data = { y: prevMarker.y, x: newX1 };
-  //       sendRhythmEvent(return_data);
-  //       return return_data;
-  //     });
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, [setPointerPosition, sendRhythmEvent]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -127,9 +120,6 @@ export default function ATCChart({
     };
   }, [accessControlStatus, updateState, data, sendRhythmEvent, setKeyStatus]);
 
-  // const colorChecker = (val) => {
-  //   return val < 200 ? "green" : "red";
-  // };
 
   useEffect(
     () => void d3.select(gx.current).call(d3.axisBottom(x).tickSize(0)),
@@ -149,11 +139,6 @@ export default function ATCChart({
   return (
     <div style={{ background: "black" }}>
       <svg width={width} height={height} id="my-svg">
-        {/* <g
-          ref={gx}
-          color="grey"
-          transform={`translate(0,${height - marginBottom})`}
-        /> */}
         <g transform={`translate(${marginLeft},0)`} />
         <g fill="white" stroke="currentColor" strokeWidth="1.5">
           <line
@@ -329,24 +314,14 @@ export default function ATCChart({
           stroke="currentColor"
           strokeWidth="1.5"
           d={line(curve1)}
-        />
-        <path
+        /> 
+         <path
           fill="none"
           color="grey"
           stroke="currentColor"
           strokeWidth="1.5"
           d={line(curve2)}
-        />
-        {/* 
-        <text
-          x={width - marginRight - 80} // Adjust the X-coordinate to align with the top-right corner
-          y={marginTop + 10} // Adjust the Y-coordinate to align with the top margin
-          fill={colorChecker(pointerPosition.y)} //"white" // Text color
-          fontSize="16" // Font size
-          fontWeight="bold" // Font weight
-        >
-          {pointerPosition.x}-{pointerPosition.y}
-        </text> */}
+        /> 
 
         <GetKeyIcon />
 
@@ -356,7 +331,7 @@ export default function ATCChart({
           stroke="currentColor"
           strokeWidth="1.5"
           d={line(curve3)}
-        />
+        /> 
 
         <defs>
           <filter x="0" y="0" width="1" height="1" id="solid">
