@@ -352,10 +352,17 @@ const curve4 = [
                 <feMergeNode in="SourceGraphic"/>
               </feMerge>
             </filter>
+            <filter x="0" y="0" width="1" height="1" id="solid1">
+              <feFlood floodColor="black" result="bg" />
+              <feMerge>
+                <feMergeNode in="bg"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
         </defs>
 
        { (data.length > 0 || data2.length> 0)  && <text x={status === "ATC" ? data2[data2.length-1]?.x: data[data.length-1]?.x} 
-        y={ status === "ATC" ? data2[data2.length-1]?.y - 30 : data[data.length-1]?.y - 30} 
+        y={ status === "ATC" ? data2[data2.length-1]?.y - 60 : data[data.length-1]?.y - 60} 
         //style={{background: 'white'}}
         //fill="white"
         filter="url(#solid)"
@@ -373,13 +380,14 @@ const curve4 = [
 
           { (data.length > 0 || data2.length> 0)  && <text x={status === "ATC" ? data2[data2.length-1]?.x: data[data.length-1]?.x} 
         y={ status === "ATC" ? data2[data2.length-1]?.y : data[data.length-1]?.y} 
-          filter="url(#solid)"
+          filter="url(#solid1)"
           textAnchor="middle"
           stroke="black"
           strokeWidth="1px"
           alignmentBaseline="middle"
+          fontSize={48}
           > 
-          X
+          🛬
           </text> }
 
          { status !== "ATC" && data.length > 0 && <text x={data[data.length-1]?.x} y={height-15} 

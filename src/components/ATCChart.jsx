@@ -341,11 +341,18 @@ export default function ATCChart({
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          <filter x="0" y="0" width="1" height="1" id="solid1">
+            <feFlood floodColor="black" result="bg" />
+            <feMerge>
+              <feMergeNode in="bg" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
 
         <text
           x={data.x}
-          y={data.y - 30}
+          y={data.y - 50}
           //style={{background: 'white'}}
           //fill="white"
           filter="url(#solid)"
@@ -366,12 +373,27 @@ export default function ATCChart({
           ).toFixed(2)}
         </text>
 
-        <circle
+        <text
+          x={data.x}
+          y={data.y}
+          //style={{background: 'white'}}
+          //fill="white"
+          filter="url(#solid1)"
+          textAnchor="middle"
+          stroke="black"
+          strokeWidth="1px"
+          alignmentBaseline="middle"
+          fontSize={48}
+        >
+       🛬
+        </text>
+
+        {/* <circle
           cx={data.x}
           cy={data.y}
           r={10} // Adjust the radius of the pointer
           fill="green" // Change the fill color to your liking
-        />
+        /> */}
       </svg>
     </div>
   );
