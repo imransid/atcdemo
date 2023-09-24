@@ -97,22 +97,22 @@ export default function RhythmChart({
               updatedPosition.y = updatedPosition.y - step;
               updatedPosition.x = updatedPosition.x + step;
 
-              const angleDegrees =
-                (Math.atan2(
-                  Math.abs(updatedPosition.y - (height - 220)),
-                  Math.abs(updatedPosition.x - (marginLeft + 900))
-                ) *
-                  180) /
-                Math.PI;
-              //console.log("angleDegrees",angleDegrees);
-              //marginLeft + 900, height - 220
-              // const cx = marginLeft + 900
-              const cy = height - 220;
-              const r = 50;
-              // const angleDegrees = Math.atan2(updatedPosition.y, updatedPosition.x ) * Math.PI / 180
-              const angleRadians = (3 * Math.PI) / 180;
-              // const x = cx + r * Math.cos(angleRadians);
-              const y = cy + r * Math.sin(angleRadians);
+              // const angleDegrees =
+              //   (Math.atan2(
+              //     Math.abs(updatedPosition.y - (height - 220)),
+              //     Math.abs(updatedPosition.x - (marginLeft + 900))
+              //   ) *
+              //     180) /
+              //   Math.PI;
+              // //console.log("angleDegrees",angleDegrees);
+              // //marginLeft + 900, height - 220
+              // // const cx = marginLeft + 900
+              // const cy = height - 220;
+              // const r = 50;
+              // // const angleDegrees = Math.atan2(updatedPosition.y, updatedPosition.x ) * Math.PI / 180
+              // const angleRadians = (3 * Math.PI) / 180;
+              // // const x = cx + r * Math.cos(angleRadians);
+              // const y = cy + r * Math.sin(angleRadians);
 
               setKeyStatus("up");
               break;
@@ -188,6 +188,7 @@ export default function RhythmChart({
             x2={marginLeft}
             y2={height - marginBottom}
           />
+          {/* ***** Nuatical mile wise scale line******/}
           <line
             color="grey"
             opacity="0.4"
@@ -251,15 +252,6 @@ export default function RhythmChart({
             x2={x(200)}
             y2={height - marginBottom}
           />
-
-          <line
-            color="grey"
-            opacity="0.4"
-            x1={x(225)}
-            y1={marginTop}
-            x2={x(225)}
-            y2={height - marginBottom}
-          />
           <line
             color="grey"
             opacity="0.4"
@@ -270,68 +262,62 @@ export default function RhythmChart({
           />
           <line
             color="grey"
-            opacity="0.4"
-            x1={x(275)}
-            y1={marginTop}
-            x2={x(275)}
-            y2={height - marginBottom}
-          />
-          <line
-            color="grey"
             x1={x(300)}
             y1={marginTop}
             x2={x(300)}
             y2={height - marginBottom}
           />
 
+        <line
+            color="grey"
+            opacity="0.4"
+            x1={x(350)}
+            y1={marginTop}
+            x2={x(350)}
+            y2={height - marginBottom}
+          />    
+
           <line
             color="grey"
             opacity="0.4"
-            x1={x(400)}
+            x1={x(410)}
             y1={marginTop}
-            x2={x(400)}
+            x2={x(410)}
             y2={height - marginBottom}
           />
           <line
             color="grey"
             opacity="0.4"
-            x1={x(500)}
+            x1={x(480)}
             y1={marginTop}
-            x2={x(500)}
+            x2={x(480)}
             y2={height - marginBottom}
           />
           <line
             color="grey"
             opacity="0.4"
-            x1={x(600)}
+            x1={x(570)}
             y1={marginTop}
-            x2={x(600)}
+            x2={x(570)}
             y2={height - marginBottom}
           />
           <line
             color="grey"
             opacity="0.4"
-            x1={x(700)}
+            x1={x(680)}
             y1={marginTop}
-            x2={x(700)}
+            x2={x(680)}
             y2={height - marginBottom}
           />
           <line
             color="grey"
             opacity="0.4"
-            x1={x(800)}
+            x1={x(820)}
             y1={marginTop}
-            x2={x(800)}
+            x2={x(820)}
             y2={height - marginBottom}
           />
-          <line
-            color="grey"
-            opacity="0.4"
-            x1={x(900)}
-            y1={marginTop}
-            x2={x(900)}
-            y2={height - marginBottom}
-          />
+{/* ***** Nuatical mile wise scale line******/}
           <line
             color="grey"
             opacity="0.4"

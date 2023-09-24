@@ -88,12 +88,25 @@ const App = ({
           prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
           prevMarker.x > x(300) ? setTimer(500): setTimer(2000)
         let return_data = { y: prevMarker.y, x: newX1, airCraftSpeed: 200 };
-        let return_data_atc = { y: pointerPositionAtc.y, x: newX1, airCraftSpeed: 200 };
+        let return_data_atc = { y: pointerPosition.y, x: newX1, airCraftSpeed: 200 };
         setPointerPositionAtc(return_data_atc);
         sendRhythmEvent(return_data);
         sendATCEvent(return_data_atc)
         return return_data;
       });
+
+      // setPointerPositionAtc((prevMarker) => {
+      //   const newX1 =
+      //     prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
+      //     prevMarker.x > x(300) ? setTimer(500): setTimer(2000)
+      //   let return_data = { y: prevMarker.y, x: newX1, airCraftSpeed: 200 };
+      //   let return_data_par = { y: pointerPositionAtc.y, x: newX1, airCraftSpeed: 200 };
+      //   setPointerPosition(return_data_par);
+      //   sendRhythmEvent(return_data_par);
+      //   sendATCEvent(return_data)
+      //   return return_data;
+      // });
+
     }, timer);
     return () => clearInterval(interval);
   }, [setPointerPosition, setPointerPositionAtc, pointerPositionAtc]);
