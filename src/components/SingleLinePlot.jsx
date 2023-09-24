@@ -163,150 +163,135 @@ const curve4 = [
           x2={marginLeft}
           y2={height - marginBottom}
         />
+        {/* ***** Nuatical mile wise scale line******/}
         <line
-          color="grey"
-          opacity="0.4"
-          x1={x(25)}
-          y1={marginTop}
-          x2={x(25)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(50)}
-          y1={marginTop}
-          x2={x(50)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(75)}
-          y1={marginTop}
-          x2={x(75)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          x1={x(100)}
-          y1={marginTop}
-          x2={x(100)}
-          y2={height - marginBottom}
-        />
+            color="grey"
+            opacity="0.4"
+            x1={x(25)}
+            y1={marginTop}
+            x2={x(25)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            opacity="0.4"
+            x1={x(50)}
+            y1={marginTop}
+            x2={x(50)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            opacity="0.4"
+            x1={x(75)}
+            y1={marginTop}
+            x2={x(75)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            x1={x(100)}
+            y1={marginTop}
+            x2={x(100)}
+            y2={height - marginBottom}
+          />
+
+          <line
+            color="grey"
+            opacity="0.4"
+            x1={x(125)}
+            y1={marginTop}
+            x2={x(125)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            opacity="0.4"
+            x1={x(150)}
+            y1={marginTop}
+            x2={x(150)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            opacity="0.4"
+            x1={x(175)}
+            y1={marginTop}
+            x2={x(175)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            x1={x(200)}
+            y1={marginTop}
+            x2={x(200)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            opacity="0.4"
+            x1={x(250)}
+            y1={marginTop}
+            x2={x(250)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            x1={x(300)}
+            y1={marginTop}
+            x2={x(300)}
+            y2={height - marginBottom}
+          />
 
         <line
-          color="grey"
-          opacity="0.4"
-          x1={x(125)}
-          y1={marginTop}
-          x2={x(125)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(150)}
-          y1={marginTop}
-          x2={x(150)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(175)}
-          y1={marginTop}
-          x2={x(175)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          x1={x(200)}
-          y1={marginTop}
-          x2={x(200)}
-          y2={height - marginBottom}
-        />
+            color="grey"
+            opacity="0.4"
+            x1={x(350)}
+            y1={marginTop}
+            x2={x(350)}
+            y2={height - marginBottom}
+          />    
 
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(225)}
-          y1={marginTop}
-          x2={x(225)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(250)}
-          y1={marginTop}
-          x2={x(250)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(275)}
-          y1={marginTop}
-          x2={x(275)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          x1={x(300)}
-          y1={marginTop}
-          x2={x(300)}
-          y2={height - marginBottom}
-        />
-
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(400)}
-          y1={marginTop}
-          x2={x(400)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(500)}
-          y1={marginTop}
-          x2={x(500)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(600)}
-          y1={marginTop}
-          x2={x(600)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(700)}
-          y1={marginTop}
-          x2={x(700)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(800)}
-          y1={marginTop}
-          x2={x(800)}
-          y2={height - marginBottom}
-        />
-        <line
-          color="grey"
-          opacity="0.4"
-          x1={x(900)}
-          y1={marginTop}
-          x2={x(900)}
-          y2={height - marginBottom}
-        />
+          <line
+            color="grey"
+            opacity="0.4"
+            x1={x(410)}
+            y1={marginTop}
+            x2={x(410)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            opacity="0.4"
+            x1={x(480)}
+            y1={marginTop}
+            x2={x(480)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            opacity="0.4"
+            x1={x(570)}
+            y1={marginTop}
+            x2={x(570)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            opacity="0.4"
+            x1={x(680)}
+            y1={marginTop}
+            x2={x(680)}
+            y2={height - marginBottom}
+          />
+          <line
+            color="grey"
+            opacity="0.4"
+            x1={x(820)}
+            y1={marginTop}
+            x2={x(820)}
+            y2={height - marginBottom}
+          />
         <line
           color="grey"
           opacity="0.4"
@@ -315,6 +300,7 @@ const curve4 = [
           x2={x(1000)}
           y2={height - marginBottom}
         />
+        {/* ***** Nuatical mile wise scale line******/}
       </g>
       <path
         fill="none"
@@ -352,10 +338,17 @@ const curve4 = [
                 <feMergeNode in="SourceGraphic"/>
               </feMerge>
             </filter>
+            <filter x="0" y="0" width="1" height="1" id="solid1">
+              <feFlood floodColor="black" result="bg" />
+              <feMerge>
+                <feMergeNode in="bg"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
         </defs>
 
        { (data.length > 0 || data2.length> 0)  && <text x={status === "ATC" ? data2[data2.length-1]?.x: data[data.length-1]?.x} 
-        y={ status === "ATC" ? data2[data2.length-1]?.y - 30 : data[data.length-1]?.y - 30} 
+        y={ status === "ATC" ? data2[data2.length-1]?.y - 60 : data[data.length-1]?.y - 60} 
         //style={{background: 'white'}}
         //fill="white"
         filter="url(#solid)"
@@ -373,13 +366,14 @@ const curve4 = [
 
           { (data.length > 0 || data2.length> 0)  && <text x={status === "ATC" ? data2[data2.length-1]?.x: data[data.length-1]?.x} 
         y={ status === "ATC" ? data2[data2.length-1]?.y : data[data.length-1]?.y} 
-          filter="url(#solid)"
+          filter="url(#solid1)"
           textAnchor="middle"
           stroke="black"
           strokeWidth="1px"
           alignmentBaseline="middle"
+          fontSize={48}
           > 
-          X
+          🛬
           </text> }
 
          { status !== "ATC" && data.length > 0 && <text x={data[data.length-1]?.x} y={height-15} 
