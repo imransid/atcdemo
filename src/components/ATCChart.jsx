@@ -64,7 +64,7 @@ export default function ATCChart({
 
   const sendRhythmEvent = async (data) => {
     const emitPayload = {
-      senderName: "Neaz",
+      senderName: "Pilot",
       targetUserName: "ATC",
       flightInfo: {
         flightName: "Flight123",

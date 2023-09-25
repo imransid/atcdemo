@@ -65,7 +65,7 @@ export default function RhythmChart({
 
   const sendRhythmEvent = async (data) => {
     const emitPayload = {
-      senderName: "Rafa",
+      senderName: "Pilot",
       targetUserName: "Rhythm",
       flightInfo: {
         flightName: "Flight123",

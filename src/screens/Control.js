@@ -42,7 +42,7 @@ const App = ({
 
     const sendRhythmEvent = async (data) => {
       const emitPayload = {
-        senderName: "Rafa",
+        senderName: "Pilot",
         targetUserName: "Rhythm",
         flightInfo: {
           flightName: "Flight123",
@@ -62,7 +62,7 @@ const App = ({
 
     const sendATCEvent = async (data) => {
       const emitPayload = {
-        senderName: "Neaz",
+        senderName: "Pilot",
         targetUserName: "ATC",
         flightInfo: {
           flightName: "Flight123",
