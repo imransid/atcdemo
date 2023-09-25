@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import io from "socket.io-client";
 import { PiArrowFatLeftDuotone, PiArrowFatRightDuotone } from "react-icons/pi";
+import { SOCKET_SERVER_URL } from "../../environment";
 
-const SOCKET_SERVER_URL = "ws://172.30.22.236:3000";
 const socket = io.connect(SOCKET_SERVER_URL);
 
 export default function ATCChart({
