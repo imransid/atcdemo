@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import RhythmChart from "../components/RhythmChart";
 import ATCChart from "../components/ATCChart";
 import * as d3 from "d3";
-import { SOCKET_SERVER_URL } from "../../environment";
+import { SOCKET_SERVER_URL } from "../environment/environment";
 
 const socket = io(SOCKET_SERVER_URL);
 

@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import io from "socket.io-client";
 import { PiArrowFatUpDuotone, PiArrowFatDownDuotone } from "react-icons/pi";
-import { SOCKET_SERVER_URL } from "../../environment";
+import { SOCKET_SERVER_URL } from "../environment/environment";
 
 const socket = io.connect(SOCKET_SERVER_URL);
 
