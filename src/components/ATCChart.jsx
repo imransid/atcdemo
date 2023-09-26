@@ -62,7 +62,7 @@ export default function ATCChart({
 
   const [keyStatus, setKeyStatus] = useState("");
 
-  const sendRhythmEvent = async (data) => {
+  const sendAtcEvent = async (data) => {
     const emitPayload = {
       senderName: "Pilot",
       targetUserName: "ATC",
@@ -109,7 +109,7 @@ export default function ATCChart({
         }
 
         updateState(updatedPosition);
-        sendRhythmEvent(updatedPosition);
+        sendAtcEvent(updatedPosition);
       }
     };
 
@@ -118,7 +118,7 @@ export default function ATCChart({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [accessControlStatus, updateState, data, sendRhythmEvent, setKeyStatus]);
+  }, [accessControlStatus, updateState, data, sendAtcEvent, setKeyStatus]);
 
 
   useEffect(

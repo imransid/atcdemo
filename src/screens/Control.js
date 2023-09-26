@@ -84,11 +84,10 @@ const App = ({
   useEffect(() => {
     const interval = setInterval(() => {
       setPointerPosition((prevMarker) => {
-        const newX1 =
-          prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
-          prevMarker.x > x(300) ? setTimer(500): setTimer(2000)
+        const newX1 = prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
+        prevMarker.x > x(300) ? setTimer(500): setTimer(2000);
         let return_data = { y: prevMarker.y, x: newX1, airCraftSpeed: 200 };
-        let return_data_atc = { y: pointerPosition.y, x: newX1, airCraftSpeed: 200 };
+        let return_data_atc = { y: pointerPositionAtc.y, x: newX1, airCraftSpeed: 200 };
         setPointerPositionAtc(return_data_atc);
         sendRhythmEvent(return_data);
         sendATCEvent(return_data_atc)
@@ -100,7 +99,7 @@ const App = ({
       //     prevMarker.x > width - marginRight ? 0 : prevMarker.x + 10;
       //     prevMarker.x > x(300) ? setTimer(500): setTimer(2000)
       //   let return_data = { y: prevMarker.y, x: newX1, airCraftSpeed: 200 };
-      //   let return_data_par = { y: pointerPositionAtc.y, x: newX1, airCraftSpeed: 200 };
+      //   let return_data_par = { y: pointerPosition.y, x: newX1, airCraftSpeed: 200 };
       //   setPointerPosition(return_data_par);
       //   sendRhythmEvent(return_data_par);
       //   sendATCEvent(return_data)
@@ -111,6 +110,24 @@ const App = ({
     return () => clearInterval(interval);
   }, [setPointerPosition, setPointerPositionAtc, pointerPositionAtc]);
 
+  const pointerPositionSameXpointUpdate =(e,flag) => {
+    const {x,y} = e;
+    if(flag === 'ATC') {
+      setPointerPosition({y: pointerPosition.y, x: x , airCraftSpeed: 200})
+      setPointerPositionAtc(e)
+      sendRhythmEvent({y: pointerPosition.y, x: x , airCraftSpeed: 200});
+      sendATCEvent(e)
+    } else {
+      setPointerPosition(e)
+      setPointerPositionAtc({y: pointerPositionAtc.y, x: x , airCraftSpeed: 200})
+      sendRhythmEvent(e);
+      sendATCEvent({y: pointerPositionAtc.y, x: x , airCraftSpeed: 200})
+    }
+
+    //sendRhythmEvent(return_data);
+    //sendATCEvent(return_data_atc)
+  }
+
   return (
     <div style={{ height: "100%", width: "100%" }}>
       {/* <LinePlot data={marker1stItem} data2={marker2ndItem} /> */}
@@ -118,13 +135,15 @@ const App = ({
       <RhythmChart
         data={pointerPosition}
         accessControlStatus={true}
-        updateState={(e) => setPointerPosition(e)}
+        updateState={(e) => pointerPositionSameXpointUpdate(e,'Rythm')}
+        //updateState={(e) => setPointerPosition(e)}
       />
 
       <ATCChart
         data={pointerPositionAtc}
         accessControlStatus={true}
-        updateState={(e) => setPointerPositionAtc(e)}
+        updateState={(e) => pointerPositionSameXpointUpdate(e,'ATC')}
+        //updateState={(e) => setPointerPositionAtc(e)}
       />
     </div>
   );

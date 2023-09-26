@@ -83,6 +83,27 @@ export default function RhythmChart({
     });
   };
 
+  // const updateAngelPerDegree = (updatedPosition) =>{
+    // const angleDegrees =
+              //   (Math.atan2(
+              //     Math.abs(updatedPosition.y - (height - 220)),
+              //     Math.abs(updatedPosition.x - (marginLeft + 900))
+              //   ) *
+              //     180) /
+              //   Math.PI;
+
+  //             //console.log("angleDegrees",angleDegrees);
+  //             //marginLeft + 900, height - 220
+  //             const cx = marginLeft + 900
+  //             const cy = height - 220;
+  //             const r = 50;
+  //             // const angleDegrees = Math.atan2(updatedPosition.y, updatedPosition.x ) * Math.PI / 180
+  //             const angleRadians = (1 * Math.PI) / 180;
+  //             const x = cx + r * Math.cos(angleRadians);
+  //             const y = cy + r * Math.sin(angleRadians);
+  //             return { x: x, y: y}
+  // }
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (accessControlStatus) {
@@ -96,24 +117,6 @@ export default function RhythmChart({
             case "ArrowUp":
               updatedPosition.y = updatedPosition.y - step;
               updatedPosition.x = updatedPosition.x + step;
-
-              // const angleDegrees =
-              //   (Math.atan2(
-              //     Math.abs(updatedPosition.y - (height - 220)),
-              //     Math.abs(updatedPosition.x - (marginLeft + 900))
-              //   ) *
-              //     180) /
-              //   Math.PI;
-              // //console.log("angleDegrees",angleDegrees);
-              // //marginLeft + 900, height - 220
-              // // const cx = marginLeft + 900
-              // const cy = height - 220;
-              // const r = 50;
-              // // const angleDegrees = Math.atan2(updatedPosition.y, updatedPosition.x ) * Math.PI / 180
-              // const angleRadians = (3 * Math.PI) / 180;
-              // // const x = cx + r * Math.cos(angleRadians);
-              // const y = cy + r * Math.sin(angleRadians);
-
               setKeyStatus("up");
               break;
             case "ArrowDown":
@@ -125,7 +128,6 @@ export default function RhythmChart({
               return;
           }
         }
-
         updateState(updatedPosition);
         sendRhythmEvent(updatedPosition);
       }
